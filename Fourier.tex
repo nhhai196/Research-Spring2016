@@ -1,0 +1,439 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University Assignment Title Page 
+% LaTeX Template
+% Version 1.0 (27/12/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% WikiBooks (http://en.wikibooks.org/wiki/LaTeX/Title_Creation)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+% Instructions for using this template:
+% This title page is capable of being compiled as is. This is not useful for 
+% including it in another document. To do this, you have two options: 
+%
+% 1) Copy/paste everything between \begin{document} and \end{document} 
+% starting at \begin{titlepage} and paste this into another LaTeX file where you 
+% want your title page.
+% OR
+% 2) Remove everything outside the \begin{titlepage} and \end{titlepage} and 
+% move this file to the same directory as the LaTeX file you wish to add it to. 
+% Then add \input{./title_page_1.tex} to your LaTeX file where you want your
+% title page.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{report}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,titling,url,array}
+\usepackage{mathtools}
+
+\newcommand{\defeq}{\vcentcolon=}
+\newcommand{\eqdef}{=\vcentcolon}
+
+\usepackage[margin=1.0in]{geometry}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{claim}[theorem]{Claim}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE Purdue University}\\[1.5cm] % Name of your university/college
+\textsc{\Large CS 699}\\[0.5cm] % Major heading such as course name
+\textsc{\large Spring 2016}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Research Thesis}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+Hai \textsc{Nguyen} % Your name
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Instructor:} \\
+Prof. Hemanta \textsc{Maji} % Supervisor's Name
+\end{flushright}
+\end{minipage}\\[4cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+%\Large \emph{Author:}\\
+%John \textsc{Smith}\\[3cm] % Your name
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+\chapter{Fourier Basics}
+\section{The vector space of functions on boolean cube}
+\begin{definition}[Inner Product]
+Consider the $2^n$-dimensional vector space of all functions 
+$f : \{ 0,1 \}^n \rightarrow\mathbb{R}$. 
+We define an inner product on this space by \center
+$\langle f, g \rangle \defeq \frac{1}{2^n}\sum\limits_{x  \in \{ 0,1 \}^n} f(x)g(x) = \mathbb{E}[f \cdot g]$. \\
+\end{definition}
+\section{The characteristic function}
+\begin{definition} [Characteristic function]
+For each $S \subset [n] = \{1,2,..., n\}$, we define the characteristic function  of $S$ as \center 
+${\chi}_S(x) = (-1)^{S \cdot x}$, where $Sx = \sum\limits_{i=1}^{n} S_i x_i = \sum \limits_{i \in S} x_i$.
+\end{definition}
+
+\begin{lemma}
+For every $S \subset [n],$ \center
+$\sum\limits_{x \in \{ 0, 1 \}^n} \chi_S(x) =
+\begin{cases}
+2^n      & \text{if} \ S = \emptyset \\
+0        & \text{if} \ S \neq \emptyset
+\end{cases}$
+\end{lemma}
+
+\begin{proof}
+If $ S = \emptyset $, then $S \cdot x = 0$. So $\sum\limits_{x \in \{ 0, 1 \}^n} \chi_S(x) = \sum \limits_{x \in \{ 0, 1 \}^n} 1 = 2^n $.
+
+If $S \neq \emptyset$, then there exists $k$ such that $S_k \neq 0$. Hence, \\
+\begin{align*}
+\sum\limits_{x \in \{ 0, 1 \}^n} \chi_S(x) 
+& = \sum\limits_{x \in \{ 0, 1 \}^n} (-1)^{\sum \limits_{i \in S} x_i} \\
+& = \sum\limits_{x \in \{ 0, 1 \}^n} [(-1)^{x_k} \cdot (-1)^{\sum\limits_{i \in S \setminus \{k \}} x_i}] \\
+& = \sum\limits_{x_k \in \{0, 1 \} }(-1)^{x_k} 
+\cdot \sum\limits_{x \setminus x_k \in \{0,1\}^{n-1}} (-1)^{\sum\limits_{i \in S \setminus \{k \}} x_i}  \\
+& = (-1)^0 \sum\limits_{x \setminus x_k \in \{0,1\}^{n-1}} (-1)^{\sum\limits_{i \in S \setminus \{k \}} x_i} + (-1)^1 \cdot \sum\limits_{x \setminus x_k \in \{0,1\}^{n-1}} (-1)^{\sum\limits_{i \in S \setminus \{k \}} x_i} \\
+& = 0
+\end{align*}
+\end{proof}
+
+\begin{theorem}
+For every $S, T \subset [n]$,
+\center
+$\langle \chi_S, \chi_T \rangle =
+\begin{cases}
+1      & \text{if} \ S = T \\
+0      & \text{if} \ S \neq T
+\end{cases}$
+\end{theorem}
+
+\begin{proof}
+\begin{align*}
+\langle \chi_S, \chi_T \rangle 
+= \frac{1}{2^n}  \sum\limits_{x \in \{0,1\}^n} (-1)^{S \cdot x + T \cdot x}
+= \frac{1}{2^n}  \sum\limits_{x \in \{0,1\}^n} (-1)^{(S \triangledown T) \cdot x}
+\end{align*}
+where $\triangledown$ is the symmetric different between two sets $S$ and $T$. \\
+If $S = T$, then $S \triangledown T = \emptyset$, otherwise $S \triangledown T \neq \emptyset$. Hence, our goals follow immediately from lemma 1.3.
+\end{proof}
+
+\section{The Fourier basis}
+\begin{theorem}
+The set of all $\chi_S$ is an orthonormal basis for the space of all real-valued function on $\{ 0, 1\}^n$
+\end{theorem}
+
+\begin{proof}
+From theorem 1.4, it suffices to show that the set of all $\chi_S$ is a basis. Suppose 
+$\sum\limits_{S \subset [n]}a_S \chi_S = \textbf{0}$. We will show that $X_S$ are linearly independent by proving $a_S = 0$ for every $S$. Let $S$ be a subset of $[n]$, then 
+\begin{align*}
+0          &= \chi_S \sum\limits_{T \subset [n]} a_T \chi_T 
+	       = \sum\limits_{T \subset [n]} a_T \langle \chi_S, \chi_T \rangle \\
+	       &= a_S \langle \chi_S, \chi_S \rangle +
+	          \sum\limits_{T \subset [n], T \neq S} a_T \langle \chi_S, \chi_T \rangle 
+	       = a_S  	       	  
+\end{align*}
+Also, there are $2^n$ different $X_S$. Hence, the set of all $\chi_S$ is a basis for the space of all real-valued function on $\{ 0,1 \}^n$
+\end{proof}
+The set of all $\chi_S$ is called the \textit{the Fourier basis}.
+
+\section{The Fourier transform}
+\begin{definition} [Fourier transform function]
+For each $S \subset [n]$, we define the Fourier transform of $f$ as following: 
+\center
+ $\hat{f}(S) = \langle f, \chi_S \rangle = \mathbb{E}[f \cdot \chi_S]$
+\end{definition}
+
+\begin{theorem}
+The mapping $\mathcal{F} : f \rightarrow \hat{f}$ is linear.
+\end{theorem}
+
+\begin{proof}
+This follows from the properties of inner product. \center
+$\langle af + bg, \chi_S \rangle = 
+ \langle af, \chi_S \rangle + \langle bg, \chi_S \rangle = 
+ a\langle f, \chi_S \rangle + b \langle g, \chi_s \rangle =
+ a \hat{f} + b \hat{g} $
+\end{proof}
+
+The linear map $\mathcal{F} : f \rightarrow \hat{f}$ is called the \textit{Fourier transform }.
+
+\begin{theorem}
+The linear map $\mathcal{F}$ is a bijection.
+\end{theorem} 
+
+\begin{proof}
+Since the set of $\chi_S$ forms an orthonormal basis, 
+\begin{equation}
+f = \sum \limits_{S} \hat{f}(S) \chi_S.
+\end{equation}
+Suppose $\mathcal{F}(f_1) = \mathcal{F}(f_2)$, i.e, $\hat{f_1}(S) = \hat{f_2}(S)$ for every $S$, then it is followed from equation (1.1) that $f_1 = f_2$. So $\mathcal{F}$ is injective. \\
+Also, equation (1.1) implies that for every $\hat{f}$, there exists a function $f = \sum \limits_{S} \hat{f}(S) \chi_S $ such that $\mathcal{F}(f) = \hat{f}$, which means that $\mathcal{F}$ is surjective. \\
+Thus, $\mathcal{F}$ is a bijection as derived 
+\end{proof}
+
+\section{The dual space}
+\begin{definition} [Dual space]
+Let $V$ be a subspace of $\{0,1\}^n$. 
+We define the dual of V as 
+$V^\perp = \{ x \in \{ 0,1 \}^n | x \cdot v = 0 \ \forall v \in V \}$.
+\end{definition}
+
+\begin{theorem}
+$V^\perp$ is a subspace of $\{ 0,1 \}^n$.
+\end{theorem}
+
+\begin{proof}
+For any $x, y \in V^\perp, a \in \{0,1\}, (a \cdot x+y)\cdot v = a \cdot (x \cdot v) + y \cdot v = 0 + 0 = 0$. 
+\end{proof} 
+
+\begin{lemma} $\sum \limits_{i: \text{even}}^t {n \choose i} = 
+\sum \limits_{i: \text{odd}}^t {n \choose i} = 2^{t-1} $.
+\end{lemma}
+
+\begin{theorem} For any subspace $V$ of dimension $k$ of $\{ 0,1 \}^n$, 
+there exists a unique dual space $V^\perp$ of dimension $n-k$.
+\end{theorem}
+
+\begin{proof}
+We will show that $|V^\perp| = 2^{n-k}$ by induction on $k$.\\
+If $k=0$, then $V = \{ \textbf{0}\}$. Clearly, $V^\perp = \{ 0, 1 \}^n$. \\
+If $k=1$, let $V = \{ \vec{0}, v \}$. 
+Suppose the number of $v_i = 1$ is $t$, 
+then the number of $x$ such that $x \cdot v = 0$ is 
+$\sum \limits_{t-i \text{ even}} {n \choose i} 2^{n-t} =
+2^{t-1} \cdot 2^{n-t} = 2^{n-1}$ by lemma 1.11. \\
+Suppose that there exists a unique orthogonal subspace $V\perp$ 
+of dimension $n-k+1$ for any subspace $V$ of $\{ 0,1 \}^n$, where $k \geq 2$. \\
+Let $V=\langle v_1, v_2,..., v_{k} \rangle$, 
+$S_1 = \langle v_1, v_2,..., v_{k-1}\rangle$, 
+and $S_2 = \langle v_{k}\rangle$. 
+By induction hypothesis, $|S_1^\perp| = 2^{n-k+1}$ 
+and $|S_2^\perp| = 2^{n-1}$. 
+\begin{claim}
+$V^\perp = S_1^\perp \cap S_2^\perp$ has a basis of size $n-k$.
+\end{claim}
+\noindent Suppose $V^\perp$ has a basis of size $t$, 
+then $|S_1^\perp \cap S_2^\perp| = 2^t$.  \\
+If $t \leq n-k-1$, then there are at least 
+$2^{n-k+1} - 2^t \geq 2^{n-k} $ vectors in $S_1^\perp \setminus V^\perp$, 
+which implies that we need at least $n-k-t$ additional vectors,
+which are independent with $t$ vectors above, for $S_1^\perp - V^\perp$. 
+Similarly, and there are at least $2^{n-1} - 2^t \geq 2^{n-2}$ 
+vectors in $S_1^\perp - V^\perp$, which implies that we need at
+least $n-2-t$ for $S_2^\perp - V^\perp$. 
+Hence, there are at least $t + (n-k-t) + (n-2-t) = 2n - t -2\ \textgreater \ n$  independent vectors for every $t \leq n - 3 $, contradiction.\\
+If $t \geq n-k+1$, then $S_1^\perp \subset S_2^\perp$,
+this is impossible since $v_k$ is independent from $v_1, v_2, ..., v_{k-1}$. \\
+Thus, $t = n-k$. So $|V^\perp| = 2^{n-k}$. 
+\end{proof}
+
+\begin{theorem}
+Let $V$ be a subspace of dimension $k$ of $\{ 0, 1 \}^n$ and let $V^\perp$ be the dual of $V$. Define \\
+ $f(x) =
+\begin{cases}
+	\frac{1}{2^k} & \text{if} \ x \in V \\
+	0             & \text{otherwise}.
+\end{cases}$. \\
+Then
+$\hat{f}(S) =
+\begin{cases}
+	\frac{1}{N} & \text{if} \ S \in V^\perp \\
+	0             & \text{otherwise}.
+\end{cases}$.
+\end{theorem}
+
+\begin{proof}
+Suppose $v_1, v_2,..., v_k $ is a basis of $V$.
+
+\begin{claim}
+$V = \langle v_1 \rangle \oplus \langle v_2 \rangle 
+	 \oplus ... \oplus \langle v_k \rangle $
+\end{claim}
+
+\begin{claim}
+${\langle v_1 \rangle}^\perp \cap ... \cap {\langle v_k \rangle}^\perp
+= {\langle v_1, ..., v_k \rangle}^\perp = V^\perp$
+\end{claim}
+
+\noindent Let $f_i = \begin{cases}
+	\frac{1}{2} & \text{if} \ S \in \langle v_i \rangle \\
+	0             & \text{otherwise}
+\end{cases}$, 
+then $\hat{f_i} = \begin{cases}
+	\frac{1}{N} & \text{if} \ S \in {\langle v_i \rangle}^ \perp \\
+	0             & \text{otherwise}.
+\end{cases}$. 
+
+\begin{claim}
+$f = f_1 \oplus f_2 \oplus ... \oplus f_k$
+\end{claim}
+
+\begin{proof}
+This is immediate from claims 1.15 and 1.16.
+\end{proof}
+
+\noindent Hence,
+\begin{align*}
+\hat{f}(S)
+         & = \widehat{f_1 \oplus ... \oplus f_k}(S) \\
+         & = N \hat{f_1}(S) \cdot \widehat{f_2 \oplus ... \oplus f_k}(S)   \\
+         & \cdot \cdot \cdot \\
+         & = N^{k-1} \hat{f_1}(S) ... \hat{f_k}(S) \\
+\end{align*}
+If $S \in V^\perp$, then $S \in {\langle v_i \rangle}^\perp$ for every $i$, so $\hat{f}(S) = N^{k-1} \cdot (\frac{1}{N})^k = \frac{1}{N}$. \\
+If $S \not\in V^\perp$, then there exits some $i$ such that $S \not\in {\langle v_i \rangle}^\perp$, which implies $\hat{f_i}(S) = 0$. Hence, $\hat{f}(S) = 0$
+\end{proof}
+
+\section{Parseval's Identity}
+Because the $\chi_S$ form an orthonormal basis, we have the following equality:
+\begin{equation}
+\langle f, g \rangle = \sum\limits_{S} \hat{f}(S) \hat{g}(S)
+\end{equation}
+In particular, when f = g we get Parseval's identity:
+\begin{equation}
+\| f \|_2^2 = \sum\limits_{S} \hat{f}(S)^2
+\end{equation}
+This also implies:
+\begin{equation}
+\| f - g \|_2^2 = \sum\limits_{S} (\hat{f}(S) - \hat{g}(S))^2
+\end{equation}
+
+\chapter{Min Entropy}
+Let $X = (x_0, x_1, ..., x_{N-1})$ be a distribution function of a random variable over $\{ 0, 1 \}^n$, where $N \defeq 2^n$. 
+\begin{definition}[Min entropy]
+We define the min entropy of $X$ as follow.\center
+$H_\infty (X) \defeq \max\limits_{i} (- \log x_i)$
+\end{definition}
+
+\begin{theorem}
+For every $k$, $H_\infty(X) \geq k \ \text{if and only if} \ x_i \leq \frac{1}{2^k} $ for every $0 \leq i \leq N-1$
+\end{theorem}
+
+\begin{theorem}[Collision Probability]
+If we sample $X$ twice, then the probability we get the same result, denoted $Col(X)$, is 
+$\sum\limits_{i = 0}^{N-1} {x_i}^2 = \| X \|_2^2$.
+\end{theorem}
+
+\begin{definition}
+A probability distribution function $f \colon \{ 0, 1 \}^n \rightarrow (0,1)$ is a \textit{T-flat} if there $\exists \ S \subset \{ 0,1 \}^n$ such that $|S| = T$ and 
+$f(x) = 
+\begin{cases}
+	\frac{1}{T} & \text{if} \ x \in S \\
+	0             & \text{otherwise}
+\end{cases}$
+\end{definition}
+
+\begin{theorem}
+For every integer $k \geq 0$, if $H_\infty(X) \geq k$, then 
+$X = \sum \alpha_i X_i$, where each $X_i$ is a \textit{$2^k$-flat}, $\sum \alpha_i = 1$, and $\alpha_i \in [0,1] \text{for every} \ i$.
+\end{theorem}
+
+\begin{proof}
+
+\end{proof}
+
+\begin{theorem}
+If $H_\infty(X) \geq k$, then $Col(X) \leq \frac{1}{2^k}$.
+\end{theorem}
+
+\begin{proof}
+By theorem 2.5, we can write $X$ as $X = \sum \alpha_i X_i$, where each $X_i$ is a $2^k\text{-flat}$ $\sum \alpha_i = 1$, and $\alpha_i \in [0,1] \text{for every} \ i$. It is obvious that $Col(X_i) = \| X_i \|_2^2 = \frac{1}{2^k}$.\\
+By Cauchy-Sachwarz inequality, \\
+$\| X \|_2^2 
+= \| \sum \alpha_i X_i \|_2^2 
+\leq | \sum \alpha_i | \cdot | \sum \alpha_i {X_i}^2|
+= \sum \alpha_i \| {X_i} \|_2^2 
+= \sum \alpha_i \frac{1}{2^k}
+= \frac{1}{2^k}$ 
+\end{proof}
+
+\begin{theorem}
+If $H_\infty(X) \geq k$, then $\sum\limits_{S} \widehat{X}(S)^2 \leq \frac{1}{2^k}$.
+\end{theorem}
+
+\begin{proof}
+This follow immediately from the Parseval's identity.
+\end{proof}
+
+\begin{definition}
+Let $\mathcal{D}$ be a probability distribution function over $\{ 0,1 \}^n$.
+We say that $\mathcal{D}$ is $\alpha^*\text{-bias}$ if it fools all linear tests. \\
+Fools all linear test means that if for any test $s$, a sample of $\mathcal{D}$, it returns 0 with probability $\frac{1}{2}+ \alpha$ and returns 1 with probability $\frac{1}{2} - \alpha$, where $\alpha \leq \alpha^*$
+\end{definition}
+
+\begin{theorem}
+If $\mathcal{D}$ is a $\alpha^*\text{-bias}$, then $\hat{\mathcal{D}}(S) \leq \frac{2\alpha^*}{N}$ for all $S$.
+\end{theorem}
+
+\begin{proof}
+$\hat{\mathcal{D}}(S) = \frac{1}{N} \sum\limits_{x} \mathcal{D}(x) (-1)^{Sx} = \frac{1}{N} ((\frac{1}{2}+ \alpha) - (\frac{1}{2} - \alpha)) = \frac{2\alpha}{N} \leq \frac{2\alpha^*}{N}$ 
+\end{proof}
+
+\begin{definition}
+We define \textit{the statistical different} between $A$ and $B$ as follow. \center
+$SD(A,B) = \frac{1}{2} \sum\limits_{i} |a_i - b_i |$
+\end{definition}
+\begin{theorem}
+Let $\mathcal{D}$ be a small bias distribution with $\hat{\mathcal{D}} \leq \frac{\alpha}{N}$ for all $S$, let $M$ be a min entropy source, and let $\mathcal{U}$ be  the uniform distribution. Then $SD(\mathcal{D} \oplus M, \mathcal{U}) \leq \frac{\alpha}{2}$
+\end{theorem}
+
+\begin{proof}
+
+\end{proof}
+
+\end{document}
+
