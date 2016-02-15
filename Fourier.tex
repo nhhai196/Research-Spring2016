@@ -31,7 +31,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[12pt]{report}
+\documentclass[12pt]{book}
 \usepackage{amsmath,amsfonts,amssymb,amsthm,titling,url,array}
 \usepackage{mathtools}
 
@@ -195,11 +195,11 @@ The set of all $\chi_S$ is called the \textit{the Fourier basis}.
 \section{Fourier Transform}
 \begin{definition} [Fourier transform function]
 For each $S \subseteq [n]$, we define the Fourier transform of $f$ as following: 
- $$\hat{f}(S) \defeq \mathbb{E}[f \cdot \chi_S] = \langle f, \chi_S \rangle $$
+ $$\widehat{f}(S) \defeq \mathbb{E}[f \cdot \chi_S] = \langle f, \chi_S \rangle $$
 \end{definition}
 
 \begin{theorem}
-The mapping $\mathcal{F} : f \rightarrow \hat{f}$ is linear.
+The mapping $\mathcal{F} : f \rightarrow \widehat{f}$ is linear.
 \end{theorem}
 
 \begin{proof}
@@ -207,10 +207,10 @@ This follows from the properties of inner product. \center
 $\langle af + bg, \chi_S \rangle = 
  \langle af, \chi_S \rangle + \langle bg, \chi_S \rangle = 
  a\langle f, \chi_S \rangle + b \langle g, \chi_s \rangle =
- a \hat{f} + b \hat{g} $
+ a \widehat{f} + b \widehat{g} $
 \end{proof}
 
-The linear map $\mathcal{F} : f \rightarrow \hat{f}$ is called the \textit{Fourier transform }.
+The linear map $\mathcal{F} : f \rightarrow \widehat{f}$ is called the \textit{Fourier transform }.
 
 \begin{theorem}
 The linear map $\mathcal{F}$ is a bijection.
@@ -219,10 +219,10 @@ The linear map $\mathcal{F}$ is a bijection.
 \begin{proof}
 Since the set of $\chi_S$ forms an orthonormal basis, 
 \begin{equation}
-f = \sum \limits_{S} \hat{f}(S) \chi_S.
+f = \sum \limits_{S} \widehat{f}(S) \chi_S.
 \end{equation}
-Suppose $\mathcal{F}(f_1) = \mathcal{F}(f_2)$, i.e, $\hat{f_1}(S) = \hat{f_2}(S)$ for every $S$, then it is followed from equation (1.1) that $f_1 = f_2$. So $\mathcal{F}$ is injective. \\
-Also, equation (1.1) implies that for every $\hat{f}$, there exists a function $f = \sum \limits_{S} \hat{f}(S) \chi_S $ such that $\mathcal{F}(f) = \hat{f}$, which means that $\mathcal{F}$ is surjective. \\
+Suppose $\mathcal{F}(f_1) = \mathcal{F}(f_2)$, i.e, $\widehat{f_1}(S) = \widehat{f_2}(S)$ for every $S$, then it is followed from equation (1.1) that $f_1 = f_2$. So $\mathcal{F}$ is injective. \\
+Also, equation (1.1) implies that for every $\widehat{f}$, there exists a function $f = \sum \limits_{S} \widehat{f}(S) \chi_S $ such that $\mathcal{F}(f) = \widehat{f}$, which means that $\mathcal{F}$ is surjective. \\
 Thus, $\mathcal{F}$ is a bijection as derived 
 \end{proof}
 
@@ -271,6 +271,47 @@ this is impossible since $v_k$ is independent from $v_1, v_2, ..., v_{k-1}$. \\
 Thus, $t = n-k$. So $|V^\perp| = 2^{n-k}$. 
 \end{proof}
 
+\section{Convolution}
+\begin{definition}
+Given any two function $f$ and $g$ : $\{ 0,1 \}^n \rightarrow \mathbb{R}$, the convolution of $f*g$ :  $\{ 0,1 \}^n \rightarrow \mathbb{R}$ is defined as
+$$(f*g)(x) \defeq \frac{1}{2^n} \sum\limits_{y \in \{0,1\}^n} f(x \oplus y) g(y)$$
+\end{definition}
+
+\begin{theorem}
+If $X$ and $Y$ are $n$-bits random independent variables with probability distributions $f$ and $g$, respectively, then $2^n(f*g)$ is the distribution of the random variable $Z = X \oplus Y$.
+\end{theorem}
+
+\begin{proof}
+
+\begin{align*}
+Pr[Z = z] 
+& = Pr[X = z \oplus Y] \\
+& = \sum\limits_{y \in \{0,1\}^n} Pr[X = z \oplus y | Y = y] 	 \\
+& = \sum\limits_{y \in \{0,1\}^n} Pr[X = z \oplus y] \cdot Pr[Y =y] \\
+& = \sum\limits_{y \in \{0,1\}^n} f((z \oplus y) \cdot g(y) \\
+& = 2^n (f *g)(z)
+\end{align*}
+\end{proof}
+\begin{theorem}
+For every $S \subseteq [n]$, 
+$$\widehat{f*g}(S) = \widehat{f}(S) \cdot \widehat{g}(S)$$
+\end{theorem}
+
+\begin{proof}
+\begin{align*}
+\widehat{f*g}(S) 
+& = \frac{1}{2^n}\sum \limits_{x} (f*g)(x) \chi_S(x) \\
+& = \frac{1}{2^n} \sum \limits_{x} \left( \frac{1}{2^n} 
+	\sum\limits_{y} f(x \oplus y) g(y) \right) \chi_S(x) \\
+& = \frac{1}{2^{2n}} \sum\limits_x  \sum\limits_y f(x \oplus y) g(y) 
+	\chi_S(x \oplus y) \chi_S(y) \\
+& = \frac{1}{2^n}\sum \limits_{x} f(x \oplus y) \chi_S(x \oplus y) 
+	\left( \frac{1}{2^n}\sum \limits_{y} g(y) \chi_S(y) \right)\\
+& = \widehat{f}(S) \cdot \widehat{g}(S)		
+\end{align*}
+\end{proof}
+
+Intuitively, the convolution $f * g$ is the product of the Fourier transforms of $f$ and $g$.
 \begin{theorem}
 Let $V$ be a subspace of dimension $k$ of $\{ 0, 1 \}^n$ and let $V^\perp$ be the dual of $V$. Define \\
  $$f(x) =
@@ -279,7 +320,7 @@ Let $V$ be a subspace of dimension $k$ of $\{ 0, 1 \}^n$ and let $V^\perp$ be th
 	0             & \text{otherwise}.
 \end{cases}$$. \\
 Then
-$$\hat{f}(S) =
+$$\widehat{f}(S) =
 \begin{cases}
 	\frac{1}{N} & \text{if} \ S \in V^\perp \\
 	0             & \text{otherwise}.
@@ -303,7 +344,7 @@ ${\langle v_1 \rangle}^\perp \cap ... \cap {\langle v_k \rangle}^\perp
 	\frac{1}{2} & \text{if} \ S \in \langle v_i \rangle \\
 	0             & \text{otherwise}
 \end{cases}$, 
-then $\hat{f_i} = \begin{cases}
+then $\widehat{f_i} = \begin{cases}
 	\frac{1}{N} & \text{if} \ S \in {\langle v_i \rangle}^ \perp \\
 	0             & \text{otherwise}.
 \end{cases}$. 
@@ -314,23 +355,23 @@ $f = f_1 \oplus f_2 \oplus ... \oplus f_k$
 \end{claim}
 
 \noindent Hence,
-$$\hat{f}(S) = N^{k-1} \hat{f_1}(S) ... \hat{f_k}(S)$$ \\
-If $S \in V^\perp$, then $S \in {\langle v_i \rangle}^\perp$ for every $i$, so $\hat{f}(S) = N^{k-1} \cdot (\frac{1}{N})^k = \frac{1}{N}$. \\
-If $S \not\in V^\perp$, then there exits some $i$ such that $S \not\in {\langle v_i \rangle}^\perp$, which implies $\hat{f_i}(S) = 0$. Hence, $\hat{f}(S) = 0$
+$$\widehat{f}(S) = N^{k-1} \widehat{f_1}(S) ... \widehat{f_k}(S)$$ \\
+If $S \in V^\perp$, then $S \in {\langle v_i \rangle}^\perp$ for every $i$, so $\widehat{f}(S) = N^{k-1} \cdot (\frac{1}{N})^k = \frac{1}{N}$. \\
+If $S \not\in V^\perp$, then there exits some $i$ such that $S \not\in {\langle v_i \rangle}^\perp$, which implies $\widehat{f_i}(S) = 0$. Hence, $\widehat{f}(S) = 0$
 \end{proof}
 
 \section{Parseval's Identity}
 Because the $\chi_S$ form an orthonormal basis, we have the following equality:
 \begin{equation}
-\langle f, g \rangle = \sum\limits_{S} \hat{f}(S) \hat{g}(S)
+\langle f, g \rangle = \sum\limits_{S} \widehat{f}(S) \widehat{g}(S)
 \end{equation}
 In particular, when f = g we get Parseval's identity:
 \begin{equation}
-\| f \|_2^2 = \sum\limits_{S} \hat{f}(S)^2
+\| f \|_2^2 = \sum\limits_{S} \widehat{f}(S)^2
 \end{equation}
 This also implies:
 \begin{equation}
-\| f - g \|_2^2 = \sum\limits_{S} (\hat{f}(S) - \hat{g}(S))^2
+\| f - g \|_2^2 = \sum\limits_{S} (\widehat{f}(S) - \widehat{g}(S))^2
 \end{equation}
 
 \chapter{Min Entropy}
@@ -395,11 +436,11 @@ Fools all linear test means that if for any test $s$, a sample of $\mathcal{D}$,
 \end{definition}
 
 \begin{theorem}
-If $\mathcal{D}$ is a $\alpha^*\text{-bias}$, then $\hat{\mathcal{D}}(S) \leq \frac{2\alpha^*}{N}$ for all $S$.
+If $\mathcal{D}$ is a $\alpha^*\text{-bias}$, then $\widehat{\mathcal{D}}(S) \leq \frac{2\alpha^*}{N}$ for all $S$.
 \end{theorem}
 
 \begin{proof}
-$\hat{\mathcal{D}}(S) = \frac{1}{N} \sum\limits_{x} \mathcal{D}(x) (-1)^{Sx} = \frac{1}{N} ((\frac{1}{2}+ \alpha) - (\frac{1}{2} - \alpha)) = \frac{2\alpha}{N} \leq \frac{2\alpha^*}{N}$ 
+$\widehat{\mathcal{D}}(S) = \frac{1}{N} \sum\limits_{x} \mathcal{D}(x) (-1)^{Sx} = \frac{1}{N} ((\frac{1}{2}+ \alpha) - (\frac{1}{2} - \alpha)) = \frac{2\alpha}{N} \leq \frac{2\alpha^*}{N}$ 
 \end{proof}
 
 \begin{definition}
@@ -407,7 +448,7 @@ $\hat{\mathcal{D}}(S) = \frac{1}{N} \sum\limits_{x} \mathcal{D}(x) (-1)^{Sx} = \
 $$SD(A,B) = \frac{1}{2} \sum\limits_{i} |a_i - b_i |$$
 \end{definition}
 \begin{theorem}
-Let $\mathcal{D}$ be a small bias distribution with $\hat{\mathcal{D}}(S) \leq \frac{\alpha}{N}$ for all $S$, let $M$ be a min entropy source such that $H_\infty(M) \geq k$, and let $\mathcal{U}$ be  the uniform distribution over $n$-bits string. Then $$SD(\mathcal{D} \oplus M, \mathcal{U}) \leq \frac{\alpha}{2}$$
+Let $\mathcal{D}$ be a small bias distribution with $\widehat{\mathcal{D}}(S) \leq \frac{\alpha}{N}$ for all $S$, let $M$ be a min entropy source such that $H_\infty(M) \geq k$, and let $\mathcal{U}$ be  the uniform distribution over $n$-bits string. Then $$SD(\mathcal{D} \oplus M, \mathcal{U}) \leq \frac{\alpha}{2}$$
 \end{theorem}
 
 \begin{proof}
