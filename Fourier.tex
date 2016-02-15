@@ -114,21 +114,23 @@ Prof. Hemanta \textsc{Maji} % Supervisor's Name
 
 %----------------------------------------------------------------------------------------
 \chapter{Fourier Basics}
-\section{The vector space of functions on boolean cube}
+\section{Vector Space of Functions on Boolean Hyper-cube}
 \begin{definition}[Inner Product]
 Consider the $2^n$-dimensional vector space of all functions 
 $f : \{ 0,1 \}^n \rightarrow\mathbb{R}$. 
-We define an inner product on this space by \center
-$\langle f, g \rangle \defeq \frac{1}{2^n}\sum\limits_{x  \in \{ 0,1 \}^n} f(x)g(x) = \mathbb{E}[f \cdot g]$. \\
+We define an inner product on this space by 
+$$\langle f, g \rangle 
+\defeq \mathbb{E}[f \cdot g] 
+= \frac{1}{2^n}\sum\limits_{x  \in \{ 0,1 \}^n} f(x)g(x)$$. 
 \end{definition}
-\section{The characteristic function}
+\section{Characteristic Functions}
 \begin{definition} [Characteristic function]
-For each $S \subset [n] = \{1,2,..., n\}$, we define the characteristic function  of $S$ as \center 
-${\chi}_S(x) = (-1)^{S \cdot x}$, where $Sx = \sum\limits_{i=1}^{n} S_i x_i = \sum \limits_{i \in S} x_i$.
+For each $S \subseteq [n] = \{1,2,..., n\}$, we define the characteristic function  of $S$ as 
+$${\chi}_S(x) = (-1)^{S \cdot x}, \text{where } S \cdot x = \sum\limits_{i=1}^{n} S_i \cdot x_i = \sum \limits_{i \in S} x_i $$.
 \end{definition}
 
 \begin{lemma}
-For every $S \subset [n],$ \center
+For every $S \subseteq [n],$ \center
 $\sum\limits_{x \in \{ 0, 1 \}^n} \chi_S(x) =
 \begin{cases}
 2^n      & \text{if} \ S = \emptyset \\
@@ -137,8 +139,7 @@ $\sum\limits_{x \in \{ 0, 1 \}^n} \chi_S(x) =
 \end{lemma}
 
 \begin{proof}
-If $ S = \emptyset $, then $S \cdot x = 0$. So $\sum\limits_{x \in \{ 0, 1 \}^n} \chi_S(x) = \sum \limits_{x \in \{ 0, 1 \}^n} 1 = 2^n $.
-
+If $ S = \emptyset $, then $S \cdot x = 0$. So $\sum\limits_{x \in \{ 0, 1 \}^n} \chi_S(x) = \sum \limits_{x \in \{ 0, 1 \}^n} 1 = 2^n $.\\
 If $S \neq \emptyset$, then there exists $k$ such that $S_k \neq 0$. Hence, \\
 \begin{align*}
 \sum\limits_{x \in \{ 0, 1 \}^n} \chi_S(x) 
@@ -146,13 +147,13 @@ If $S \neq \emptyset$, then there exists $k$ such that $S_k \neq 0$. Hence, \\
 & = \sum\limits_{x \in \{ 0, 1 \}^n} [(-1)^{x_k} \cdot (-1)^{\sum\limits_{i \in S \setminus \{k \}} x_i}] \\
 & = \sum\limits_{x_k \in \{0, 1 \} }(-1)^{x_k} 
 \cdot \sum\limits_{x \setminus x_k \in \{0,1\}^{n-1}} (-1)^{\sum\limits_{i \in S \setminus \{k \}} x_i}  \\
-& = (-1)^0 \sum\limits_{x \setminus x_k \in \{0,1\}^{n-1}} (-1)^{\sum\limits_{i \in S \setminus \{k \}} x_i} + (-1)^1 \cdot \sum\limits_{x \setminus x_k \in \{0,1\}^{n-1}} (-1)^{\sum\limits_{i \in S \setminus \{k \}} x_i} \\
+& = \left[(-1)^0 + (-1)^1 \right] \sum\limits_{x \setminus x_k \in \{0,1\}^{n-1}} (-1)^{\sum\limits_{i \in S \setminus \{k \}} x_i} \\
 & = 0
 \end{align*}
 \end{proof}
 
 \begin{theorem}
-For every $S, T \subset [n]$,
+For every $S, T \subseteq [n]$,
 \center
 $\langle \chi_S, \chi_T \rangle =
 \begin{cases}
@@ -165,36 +166,36 @@ $\langle \chi_S, \chi_T \rangle =
 \begin{align*}
 \langle \chi_S, \chi_T \rangle 
 = \frac{1}{2^n}  \sum\limits_{x \in \{0,1\}^n} (-1)^{S \cdot x + T \cdot x}
-= \frac{1}{2^n}  \sum\limits_{x \in \{0,1\}^n} (-1)^{(S \triangledown T) \cdot x}
+= \frac{1}{2^n}  \sum\limits_{x \in \{0,1\}^n} (-1)^{(S \Delta T) \cdot x}
 \end{align*}
-where $\triangledown$ is the symmetric different between two sets $S$ and $T$. \\
-If $S = T$, then $S \triangledown T = \emptyset$, otherwise $S \triangledown T \neq \emptyset$. Hence, our goals follow immediately from lemma 1.3.
+where $\Delta$ is the symmetric different between two sets $S$ and $T$. \\
+ $S \Delta T = \emptyset$ if and only if  $S = T$. Hence, our goal follows immediately from Lemma 1.3.
 \end{proof}
 
-\section{The Fourier basis}
+\section{Fourier Basis}
 \begin{theorem}
-The set of all $\chi_S$ is an orthonormal basis for the space of all real-valued function on $\{ 0, 1\}^n$
+The set of all $\chi_S$ defines an orthonormal basis for the space of all real-valued function on $\{ 0, 1\}^n$
 \end{theorem}
 
 \begin{proof}
-From theorem 1.4, it suffices to show that the set of all $\chi_S$ is a basis. Suppose 
-$\sum\limits_{S \subset [n]}a_S \chi_S = \textbf{0}$. We will show that $X_S$ are linearly independent by proving $a_S = 0$ for every $S$. Let $S$ be a subset of $[n]$, then 
-\begin{align*}
-0          &= \chi_S \sum\limits_{T \subset [n]} a_T \chi_T 
-	       = \sum\limits_{T \subset [n]} a_T \langle \chi_S, \chi_T \rangle \\
-	       &= a_S \langle \chi_S, \chi_S \rangle +
-	          \sum\limits_{T \subset [n], T \neq S} a_T \langle \chi_S, \chi_T \rangle 
-	       = a_S  	       	  
-\end{align*}
-Also, there are $2^n$ different $X_S$. Hence, the set of all $\chi_S$ is a basis for the space of all real-valued function on $\{ 0,1 \}^n$
+From Theorem 1.4, the set of all $\chi_S$ is an orthonormal set. Also, there are $2^n$ different $\chi_S$. Hence, the set of all $\chi_s$ must be an orthonormal basis for the space of all real-valued functions on $\{ 0,1 \}^n$.
+%it suffices to show that the set of all $\chi_S$ is a basis. Suppose 
+%$\sum\limits_{S \subseteq [n]}a_S \chi_S = \textbf{0}$. We will show that $X_S$ are %linearly independent by proving $a_S = 0$ for every $S$. Let $S$ be a subset of $[n]$, then 
+%\begin{align*}
+%          &= \chi_S \sum\limits_{T \subseteq [n]} a_T \chi_T 
+%	       = \sum\limits_{T \subseteq [n]} a_T \langle \chi_S, \chi_T \rangle \\
+%	       &= a_S \langle \chi_S, \chi_S \rangle +
+%	          \sum\limits_{T \subseteq [n], T \neq S} a_T \langle \chi_S, \chi_T \rangle 
+%	       = a_S  	       	  
+%\end{align*}
+%Also, there are $2^n$ different $X_S$. Hence, the set of all $\chi_S$ is a basis for the space of all real-valued function on $\{ 0,1 \}^n$
 \end{proof}
 The set of all $\chi_S$ is called the \textit{the Fourier basis}.
 
-\section{The Fourier transform}
+\section{Fourier Transform}
 \begin{definition} [Fourier transform function]
-For each $S \subset [n]$, we define the Fourier transform of $f$ as following: 
-\center
- $\hat{f}(S) = \langle f, \chi_S \rangle = \mathbb{E}[f \cdot \chi_S]$
+For each $S \subseteq [n]$, we define the Fourier transform of $f$ as following: 
+ $$\hat{f}(S) \defeq \mathbb{E}[f \cdot \chi_S] = \langle f, \chi_S \rangle $$
 \end{definition}
 
 \begin{theorem}
@@ -225,7 +226,7 @@ Also, equation (1.1) implies that for every $\hat{f}$, there exists a function $
 Thus, $\mathcal{F}$ is a bijection as derived 
 \end{proof}
 
-\section{The dual space}
+\section{Dual of a Vector Space}
 \begin{definition} [Dual space]
 Let $V$ be a subspace of $\{0,1\}^n$. 
 We define the dual of V as 
@@ -245,7 +246,7 @@ For any $x, y \in V^\perp, a \in \{0,1\}, (a \cdot x+y)\cdot v = a \cdot (x \cdo
 \end{lemma}
 
 \begin{theorem} For any subspace $V$ of dimension $k$ of $\{ 0,1 \}^n$, 
-there exists a unique dual space $V^\perp$ of dimension $n-k$.
+there exists a unique dual space $V^\perp$ of dimension $(n-k)$.
 \end{theorem}
 
 \begin{proof}
@@ -254,46 +255,35 @@ If $k=0$, then $V = \{ \textbf{0}\}$. Clearly, $V^\perp = \{ 0, 1 \}^n$. \\
 If $k=1$, let $V = \{ \vec{0}, v \}$. 
 Suppose the number of $v_i = 1$ is $t$, 
 then the number of $x$ such that $x \cdot v = 0$ is 
-$\sum \limits_{t-i \text{ even}} {n \choose i} 2^{n-t} =
-2^{t-1} \cdot 2^{n-t} = 2^{n-1}$ by lemma 1.11. \\
+$\sum \limits_{i: 2|t-i} {n \choose i} 2^{n-t} =
+2^{t-1} \cdot 2^{n-t} = 2^{n-1}$ by Lemma 1.11. \\
 Suppose that there exists a unique orthogonal subspace $V\perp$ 
-of dimension $n-k+1$ for any subspace $V$ of $\{ 0,1 \}^n$, where $k \geq 2$. \\
+of dimension $(n-k+1)$ for any subspace $V$ of dimension $k-1$ of $\{ 0,1 \}^n$, where $k \geq 2$. \\
 Let $V=\langle v_1, v_2,..., v_{k} \rangle$, 
 $S_1 = \langle v_1, v_2,..., v_{k-1}\rangle$, 
-and $S_2 = \langle v_{k}\rangle$. 
-By induction hypothesis, $|S_1^\perp| = 2^{n-k+1}$ 
-and $|S_2^\perp| = 2^{n-1}$. 
-\begin{claim}
-$V^\perp = S_1^\perp \cap S_2^\perp$ has a basis of size $n-k$.
-\end{claim}
-\noindent Suppose $V^\perp$ has a basis of size $t$, 
-then $|S_1^\perp \cap S_2^\perp| = 2^t$.  \\
-If $t \leq n-k-1$, then there are at least 
-$2^{n-k+1} - 2^t \geq 2^{n-k} $ vectors in $S_1^\perp \setminus V^\perp$, 
-which implies that we need at least $n-k-t$ additional vectors,
-which are independent with $t$ vectors above, for $S_1^\perp - V^\perp$. 
-Similarly, and there are at least $2^{n-1} - 2^t \geq 2^{n-2}$ 
-vectors in $S_1^\perp - V^\perp$, which implies that we need at
-least $n-2-t$ for $S_2^\perp - V^\perp$. 
-Hence, there are at least $t + (n-k-t) + (n-2-t) = 2n - t -2\ \textgreater \ n$  independent vectors for every $t \leq n - 3 $, contradiction.\\
-If $t \geq n-k+1$, then $S_1^\perp \subset S_2^\perp$,
+and $S_2 = \langle v_{k}\rangle$.  Then, $V^\perp = S_1^\perp \cap S_2^\perp$. \\
+Suppose $dim(V^\perp) = t$. We want to show $t = n-k$.\\
+By induction hypothesis, $dim(S_1^\perp) = n-k+1$ 
+and $dim(S_2^\perp) = n-1$. \\
+If $t \leq n-k-1$, then we need $[(n-k+1) - t]$ independent vectors to cover $S_1^\perp$ from extending $V^\perp$, and we need $[(n-1) -t]$ independent vectors to cover $S_2^\perp$ from extending $V^\perp$. Since $S_1^\perp \cup S_2^\perp \subseteq \{ 0,1\}^n$, we must have $[(n-k+1) - t] + [(n-1) -t] + t \leq n$, which is equivalent to $t \geq n-k$, contradiction.\\
+If $t \geq n-k+1$, then $S_1^\perp \subseteq S_2^\perp$,
 this is impossible since $v_k$ is independent from $v_1, v_2, ..., v_{k-1}$. \\
 Thus, $t = n-k$. So $|V^\perp| = 2^{n-k}$. 
 \end{proof}
 
 \begin{theorem}
 Let $V$ be a subspace of dimension $k$ of $\{ 0, 1 \}^n$ and let $V^\perp$ be the dual of $V$. Define \\
- $f(x) =
+ $$f(x) =
 \begin{cases}
 	\frac{1}{2^k} & \text{if} \ x \in V \\
 	0             & \text{otherwise}.
-\end{cases}$. \\
+\end{cases}$$. \\
 Then
-$\hat{f}(S) =
+$$\hat{f}(S) =
 \begin{cases}
 	\frac{1}{N} & \text{if} \ S \in V^\perp \\
 	0             & \text{otherwise}.
-\end{cases}$.
+\end{cases}$$.
 \end{theorem}
 
 \begin{proof}
@@ -318,22 +308,13 @@ then $\hat{f_i} = \begin{cases}
 	0             & \text{otherwise}.
 \end{cases}$. 
 
+\noindent From above claims, we immediately obtain following result.
 \begin{claim}
 $f = f_1 \oplus f_2 \oplus ... \oplus f_k$
 \end{claim}
 
-\begin{proof}
-This is immediate from claims 1.15 and 1.16.
-\end{proof}
-
 \noindent Hence,
-\begin{align*}
-\hat{f}(S)
-         & = \widehat{f_1 \oplus ... \oplus f_k}(S) \\
-         & = N \hat{f_1}(S) \cdot \widehat{f_2 \oplus ... \oplus f_k}(S)   \\
-         & \cdot \cdot \cdot \\
-         & = N^{k-1} \hat{f_1}(S) ... \hat{f_k}(S) \\
-\end{align*}
+$$\hat{f}(S) = N^{k-1} \hat{f_1}(S) ... \hat{f_k}(S)$$ \\
 If $S \in V^\perp$, then $S \in {\langle v_i \rangle}^\perp$ for every $i$, so $\hat{f}(S) = N^{k-1} \cdot (\frac{1}{N})^k = \frac{1}{N}$. \\
 If $S \not\in V^\perp$, then there exits some $i$ such that $S \not\in {\langle v_i \rangle}^\perp$, which implies $\hat{f_i}(S) = 0$. Hence, $\hat{f}(S) = 0$
 \end{proof}
@@ -359,17 +340,15 @@ We define the min entropy of $X$ as follow.\center
 $H_\infty (X) \defeq \max\limits_{i} (- \log x_i)$
 \end{definition}
 
-\begin{theorem}
-For every $k$, $H_\infty(X) \geq k \ \text{if and only if} \ x_i \leq \frac{1}{2^k} $ for every $0 \leq i \leq N-1$
-\end{theorem}
+This implies that if $H_\infty(X) \geq k \ \text{then } \ x_i \leq \frac{1}{2^k} $ for every $0 \leq i \leq N-1$
 
 \begin{theorem}[Collision Probability]
 If we sample $X$ twice, then the probability we get the same result, denoted $Col(X)$, is 
-$\sum\limits_{i = 0}^{N-1} {x_i}^2 = \| X \|_2^2$.
+$\sum\limits_{i = 0}^{N-1} {x_i}^2 = N \cdot \| X \|_2^2$.
 \end{theorem}
 
 \begin{definition}
-A probability distribution function $f \colon \{ 0, 1 \}^n \rightarrow (0,1)$ is a \textit{T-flat} if there $\exists \ S \subset \{ 0,1 \}^n$ such that $|S| = T$ and 
+A probability distribution function $f \colon \{ 0, 1 \}^n \rightarrow (0,1)$ is a \textit{T-flat} if there $\exists \ S \subseteq \{ 0,1 \}^n$ such that $|S| = T$ and 
 $f(x) = 
 \begin{cases}
 	\frac{1}{T} & \text{if} \ x \in S \\
