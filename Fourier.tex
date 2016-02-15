@@ -257,7 +257,7 @@ Suppose the number of $v_i = 1$ is $t$,
 then the number of $x$ such that $x \cdot v = 0$ is 
 $\sum \limits_{i: 2|t-i} {n \choose i} 2^{n-t} =
 2^{t-1} \cdot 2^{n-t} = 2^{n-1}$ by Lemma 1.11. \\
-Suppose that there exists a unique orthogonal subspace $V\perp$ 
+Suppose that there exists a unique orthogonal subspace $V^\perp$ 
 of dimension $(n-k+1)$ for any subspace $V$ of dimension $k-1$ of $\{ 0,1 \}^n$, where $k \geq 2$. \\
 Let $V=\langle v_1, v_2,..., v_{k} \rangle$, 
 $S_1 = \langle v_1, v_2,..., v_{k-1}\rangle$, 
@@ -403,11 +403,11 @@ $\hat{\mathcal{D}}(S) = \frac{1}{N} \sum\limits_{x} \mathcal{D}(x) (-1)^{Sx} = \
 \end{proof}
 
 \begin{definition}
-We define \textit{the statistical different} between $A$ and $B$ as follow. \center
-$SD(A,B) = \frac{1}{2} \sum\limits_{i} |a_i - b_i |$
+\textit{The statistical different} between two distributions $A$ and $B$ is defined as follow.
+$$SD(A,B) = \frac{1}{2} \sum\limits_{i} |a_i - b_i |$$
 \end{definition}
 \begin{theorem}
-Let $\mathcal{D}$ be a small bias distribution with $\hat{\mathcal{D}} \leq \frac{\alpha}{N}$ for all $S$, let $M$ be a min entropy source, and let $\mathcal{U}$ be  the uniform distribution. Then $SD(\mathcal{D} \oplus M, \mathcal{U}) \leq \frac{\alpha}{2}$
+Let $\mathcal{D}$ be a small bias distribution with $\hat{\mathcal{D}}(S) \leq \frac{\alpha}{N}$ for all $S$, let $M$ be a min entropy source such that $H_\infty(M) \geq k$, and let $\mathcal{U}$ be  the uniform distribution over $n$-bits string. Then $$SD(\mathcal{D} \oplus M, \mathcal{U}) \leq \frac{\alpha}{2}$$
 \end{theorem}
 
 \begin{proof}
