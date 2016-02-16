@@ -376,7 +376,7 @@ This also implies:
 
 \chapter{Min Entropy}
 Let $X = (x_0, x_1, ..., x_{N-1})$ be a distribution function of a random variable over $\{ 0, 1 \}^n$, where $N \defeq 2^n$. 
-\begin{definition}[Min entropy]
+\begin{definition}[Min Entropy]
 We define the min entropy of $X$ as follow.\center
 $H_\infty (X) \defeq \max\limits_{i} (- \log x_i)$
 \end{definition}
@@ -399,7 +399,7 @@ $f(x) =
 
 \begin{theorem}
 For every integer $k \geq 0$, if $H_\infty(X) \geq k$, then 
-$X = \sum \alpha_i X_i$, where each $X_i$ is a \textit{$2^k$-flat}, $\sum \alpha_i = 1$, and $\alpha_i \in [0,1] \text{for every} \ i$.
+$X = \sum \alpha_i X_i$, where each $X_i$ is a \textit{$2^k$-flat}, $\alpha_i \in [0,1] \text{for every} \ i$, and $\sum\limits_i \alpha_i = 1$.
 \end{theorem}
 
 \begin{proof}
@@ -411,48 +411,70 @@ If $H_\infty(X) \geq k$, then $Col(X) \leq \frac{1}{2^k}$.
 \end{theorem}
 
 \begin{proof}
-By theorem 2.5, we can write $X$ as $X = \sum \alpha_i X_i$, where each $X_i$ is a $2^k\text{-flat}$ $\sum \alpha_i = 1$, and $\alpha_i \in [0,1] \text{for every} \ i$. It is obvious that $Col(X_i) = \| X_i \|_2^2 = \frac{1}{2^k}$.\\
-By Cauchy-Sachwarz inequality, \\
-$\| X \|_2^2 
-= \| \sum \alpha_i X_i \|_2^2 
-\leq | \sum \alpha_i | \cdot | \sum \alpha_i {X_i}^2|
-= \sum \alpha_i \| {X_i} \|_2^2 
-= \sum \alpha_i \frac{1}{2^k}
-= \frac{1}{2^k}$ 
+By theorem 2.5, we can write $X$ as $X = \sum\limits_i \alpha_i X_i$, where each $X_i$ is a $2^k\text{-flat}$ $\sum \alpha_i = 1$, and $\alpha_i \in [0,1] \text{for every} \ i$. It is obvious that $Col(X_i) = \| X_i \|_2^2 = \frac{1}{2^k}$.\\
+Collision functions are convex, so by Jensen's inequality, 
+$$Col(X) = Col \left( \sum\limits_i \alpha_i X_i \right)
+\leq \sum\limits_i \alpha_i \cdot Col(X_i)
+= \sum\limits_i \alpha_i \frac{1}{2^k} 
+=\frac{1}{2^k} \sum\limits_i \alpha_i 
+= \frac{1}{2^k}$$
+%By Cauchy-Sachwarz inequality, \\
+%$\| X \|_2^2 
+%= \| \sum \alpha_i X_i \|_2^2 
+%\leq | \sum \alpha_i | \cdot | \sum \alpha_i {X_i}^2|
+%= \sum \alpha_i \| {X_i} \|_2^2 
+%= \sum \alpha_i \frac{1}{2^k}
+%= \frac{1}{2^k}$ 
 \end{proof}
 
 \begin{theorem}
-If $H_\infty(X) \geq k$, then $\sum\limits_{S} \widehat{X}(S)^2 \leq \frac{1}{2^k}$.
+If $H_\infty(X) \geq k$, then $\sum\limits_{S} \widehat{X}(S)^2 \leq \frac{1}{N \cdot 2^k}$.
 \end{theorem}
 
-\begin{proof}
 This follow immediately from the Parseval's identity.
-\end{proof}
 
-\begin{definition}
+\begin{definition}[Small Bias Distribution]
 Let $\mathcal{D}$ be a probability distribution function over $\{ 0,1 \}^n$.
-We say that $\mathcal{D}$ is $\alpha^*\text{-bias}$ if it fools all linear tests. \\
-Fools all linear test means that if for any test $s$, a sample of $\mathcal{D}$, it returns 0 with probability $\frac{1}{2}+ \alpha$ and returns 1 with probability $\frac{1}{2} - \alpha$, where $\alpha \leq \alpha^*$
+We say that $\mathcal{D}$ is $\alpha\text{-bias}$ if $\widehat{D}(S) \leq \frac{\alpha}{N}$. \\
+%Fools all linear test means that if for any test $s$, a sample of $\mathcal{D}$, it returns 0 with probability $\frac{1}{2}+ \alpha$ and returns 1 with probability $\frac{1}{2} - \alpha$, where $\alpha \leq \alpha^*$
 \end{definition}
 
-\begin{theorem}
-If $\mathcal{D}$ is a $\alpha^*\text{-bias}$, then $\widehat{\mathcal{D}}(S) \leq \frac{2\alpha^*}{N}$ for all $S$.
-\end{theorem}
+%\begin{theorem}
+%If $\mathcal{D}$ is a $\alpha^*\text{-bias}$, then $\widehat{\mathcal{D}}(S) \leq \frac{2\alpha^*}{N}$ for all $S$.
+%\end{theorem}
 
-\begin{proof}
-$\widehat{\mathcal{D}}(S) = \frac{1}{N} \sum\limits_{x} \mathcal{D}(x) (-1)^{Sx} = \frac{1}{N} ((\frac{1}{2}+ \alpha) - (\frac{1}{2} - \alpha)) = \frac{2\alpha}{N} \leq \frac{2\alpha^*}{N}$ 
-\end{proof}
+%\begin{proof}
+%$\widehat{\mathcal{D}}(S) = \frac{1}{N} \sum\limits_{x} \mathcal{D}(x) (-1)^{Sx} = \frac{1}{N} ((\frac{1}{2}+ \alpha) - (\frac{1}{2} - \alpha)) = \frac{2\alpha}{N} \leq \frac{2\alpha^*}{N}$ 
+%\end{proof}
 
 \begin{definition}
-\textit{The statistical different} between two distributions $A$ and $B$ is defined as follow.
+\textit{Statistical Different} between two distributions $A$ and $B$ is defined as follow:
 $$SD(A,B) = \frac{1}{2} \sum\limits_{i} |a_i - b_i |$$
 \end{definition}
 \begin{theorem}
-Let $\mathcal{D}$ be a small bias distribution with $\widehat{\mathcal{D}}(S) \leq \frac{\alpha}{N}$ for all $S$, let $M$ be a min entropy source such that $H_\infty(M) \geq k$, and let $\mathcal{U}$ be  the uniform distribution over $n$-bits string. Then $$SD(\mathcal{D} \oplus M, \mathcal{U}) \leq \frac{\alpha}{2}$$
+Let $\mathcal{D}$ be a small bias distribution with $\widehat{\mathcal{D}}(S) \leq \frac{\alpha}{N}$ for all $S$, let $\mathcal{M}$ be a min entropy source such that $H_\infty(\mathcal{M}) \geq k$, and let $\mathcal{U}$ be  the uniform distribution over $n$-bits string. Then $$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U}) \leq \frac{\alpha}{2^{k+1}}$$
 \end{theorem}
 
-\begin{proof}
-
+\begin{proof} Let $f = \mathcal{D} \oplus \mathcal{M}$, then 
+\begin{align*}
+SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U})
+&= \frac{1}{2} \sum\limits_i |(\mathcal{D} \oplus \mathcal{M})(i) - \mathcal{U}(i) | \\
+& \leq \frac{1}{2}  \sqrt{N \sum\limits_i [(\mathcal{D} \oplus \mathcal{M})(i) - \mathcal{U}(i)]^2} \\
+&= \frac{1}{2}  \sqrt{N^2 \cdot \| (\mathcal{D} \oplus \mathcal{M}) - \mathcal{U} \|_2^2} \\
+& = \frac{N}{2} \sqrt{\sum\limits_{S \neq \emptyset} 
+\widehat{\mathcal{D} \oplus \mathcal{M}}(S)^2}
+\end{align*}
+By convolution,
+\begin{align*}
+\widehat{\mathcal{D} \oplus \mathcal{M}}(S) 
+&= N \cdot \widehat{\mathcal{D} * \mathcal{M}} (S) \\
+&= N \cdot \widehat{\mathcal{D}}(S) \cdot \widehat{\mathcal{M}}(S) \\
+& \leq N \cdot \frac{\alpha}{N} \cdot \frac{1}{N \cdot 2^k} \\
+&= \frac{\alpha}{N \cdot 2^k}
+\end{align*}
+Hence, 
+$$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U}) 
+\leq \frac{\alpha}{2^{k+1}} $$
 \end{proof}
 
 \end{document}
