@@ -226,51 +226,6 @@ Also, equation (1.1) implies that for every $\widehat{f}$, there exists a functi
 Thus, $\mathcal{F}$ is a bijection as derived 
 \end{proof}
 
-\section{Dual of a Vector Space}
-\begin{definition} [Dual space]
-Let $V$ be a subspace of $\{0,1\}^n$. 
-We define the dual of V as 
-$V^\perp = \{ x \in \{ 0,1 \}^n | x \cdot v = 0 \ \forall v \in V \}$.
-\end{definition}
-
-\begin{theorem}
-$V^\perp$ is a subspace of $\{ 0,1 \}^n$.
-\end{theorem}
-
-\begin{proof}
-For any $x, y \in V^\perp, a \in \{0,1\}, (a \cdot x+y)\cdot v = a \cdot (x \cdot v) + y \cdot v = 0 + 0 = 0$. 
-\end{proof} 
-
-\begin{lemma} $\sum \limits_{i: \text{even}}^t {n \choose i} = 
-\sum \limits_{i: \text{odd}}^t {n \choose i} = 2^{t-1} $.
-\end{lemma}
-
-\begin{theorem} For any subspace $V$ of dimension $k$ of $\{ 0,1 \}^n$, 
-there exists a unique dual space $V^\perp$ of dimension $(n-k)$.
-\end{theorem}
-
-\begin{proof}
-We will show that $|V^\perp| = 2^{n-k}$ by induction on $k$.\\
-If $k=0$, then $V = \{ \textbf{0}\}$. Clearly, $V^\perp = \{ 0, 1 \}^n$. \\
-If $k=1$, let $V = \{ \vec{0}, v \}$. 
-Suppose the number of $v_i = 1$ is $t$, 
-then the number of $x$ such that $x \cdot v = 0$ is 
-$\sum \limits_{i: 2|t-i} {n \choose i} 2^{n-t} =
-2^{t-1} \cdot 2^{n-t} = 2^{n-1}$ by Lemma 1.11. \\
-Suppose that there exists a unique orthogonal subspace $V^\perp$ 
-of dimension $(n-k+1)$ for any subspace $V$ of dimension $k-1$ of $\{ 0,1 \}^n$, where $k \geq 2$. \\
-Let $V=\langle v_1, v_2,..., v_{k} \rangle$, 
-$S_1 = \langle v_1, v_2,..., v_{k-1}\rangle$, 
-and $S_2 = \langle v_{k}\rangle$.  Then, $V^\perp = S_1^\perp \cap S_2^\perp$. \\
-Suppose $dim(V^\perp) = t$. We want to show $t = n-k$.\\
-By induction hypothesis, $dim(S_1^\perp) = n-k+1$ 
-and $dim(S_2^\perp) = n-1$. \\
-If $t \leq n-k-1$, then we need $[(n-k+1) - t]$ independent vectors to cover $S_1^\perp$ from extending $V^\perp$, and we need $[(n-1) -t]$ independent vectors to cover $S_2^\perp$ from extending $V^\perp$. Since $S_1^\perp \cup S_2^\perp \subseteq \{ 0,1\}^n$, we must have $[(n-k+1) - t] + [(n-1) -t] + t \leq n$, which is equivalent to $t \geq n-k$, contradiction.\\
-If $t \geq n-k+1$, then $S_1^\perp \subseteq S_2^\perp$,
-this is impossible since $v_k$ is independent from $v_1, v_2, ..., v_{k-1}$. \\
-Thus, $t = n-k$. So $|V^\perp| = 2^{n-k}$. 
-\end{proof}
-
 \section{Convolution}
 \begin{definition}
 Given any two function $f$ and $g$ : $\{ 0,1 \}^n \rightarrow \mathbb{R}$, the convolution of $f*g$ :  $\{ 0,1 \}^n \rightarrow \mathbb{R}$ is defined as
@@ -406,7 +361,7 @@ $X = \sum \alpha_i X_i$, where each $X_i$ is a \textit{$2^k$-flat}, $\alpha_i \i
 \end{theorem}
 
 \begin{proof}
-Let $S$ be the set of all the probability distributions $X$ with $H_{\infty}(X) \geq k$, then S is a compact convex polytope in $\mathbb{R}^N$. The set of all $2^k$-flat distributions is the set of vertices (extreme points) of $S$. In a compact convex set, every point can be written as a convex combination of its vertices. Hence, every distribution $X$ with  $H_{\infty}(X) \geq k$ can be written as a convex combination of $k$-flat distributions. 
+Let $S$ be the set of all the probability distributions $X$ with $H_{\infty}(X) \geq k$, then S is a compact convex polytope in $\mathbb{R}^N$. The set of all $2^k$-flat distributions is the set of vertices (extreme points) of $S$. Since $S$ is a compact convex set, $S$ equals to the set of all convex combinations of its vertices. Hence, every distribution $X$ with  $H_{\infty}(X) \geq k$ can be written as a convex combination of $k$-flat distributions. 
 
 \end{proof}
 
@@ -479,6 +434,54 @@ By convolution,
 Hence, 
 $$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U}) 
 \leq \frac{\alpha}{2^{k+1}} $$
+\end{proof}
+
+\appendix
+
+\chapter{}
+\section{Dual of a Vector Space}
+\begin{definition} [Dual space]
+Let $V$ be a subspace of $\{0,1\}^n$. 
+We define the dual of V as 
+$V^\perp = \{ x \in \{ 0,1 \}^n | x \cdot v = 0 \ \forall v \in V \}$.
+\end{definition}
+
+\begin{theorem}
+$V^\perp$ is a subspace of $\{ 0,1 \}^n$.
+\end{theorem}
+
+\begin{proof}
+For any $x, y \in V^\perp, a \in \{0,1\}, (a \cdot x+y)\cdot v = a \cdot (x \cdot v) + y \cdot v = 0 + 0 = 0$. 
+\end{proof} 
+
+\begin{lemma} $\sum \limits_{i: \text{even}}^t {n \choose i} = 
+\sum \limits_{i: \text{odd}}^t {n \choose i} = 2^{t-1} $.
+\end{lemma}
+
+\begin{theorem} For any subspace $V$ of dimension $k$ of $\{ 0,1 \}^n$, 
+there exists a unique dual space $V^\perp$ of dimension $(n-k)$.
+\end{theorem}
+
+\begin{proof}
+We will show that $|V^\perp| = 2^{n-k}$ by induction on $k$.\\
+If $k=0$, then $V = \{ \textbf{0}\}$. Clearly, $V^\perp = \{ 0, 1 \}^n$. \\
+If $k=1$, let $V = \{ \vec{0}, v \}$. 
+Suppose the number of $v_i = 1$ is $t$, 
+then the number of $x$ such that $x \cdot v = 0$ is 
+$\sum \limits_{i: 2|t-i} {n \choose i} 2^{n-t} =
+2^{t-1} \cdot 2^{n-t} = 2^{n-1}$ by Lemma A.3. \\
+Suppose that there exists a unique orthogonal subspace $V^\perp$ 
+of dimension $(n-k+1)$ for any subspace $V$ of dimension $k-1$ of $\{ 0,1 \}^n$, where $k \geq 2$. \\
+Let $V=\langle v_1, v_2,..., v_{k} \rangle$, 
+$S_1 = \langle v_1, v_2,..., v_{k-1}\rangle$, 
+and $S_2 = \langle v_{k}\rangle$.  Then, $V^\perp = S_1^\perp \cap S_2^\perp$. \\
+Suppose $dim(V^\perp) = t$. We want to show $t = n-k$.\\
+By induction hypothesis, $dim(S_1^\perp) = n-k+1$ 
+and $dim(S_2^\perp) = n-1$. \\
+If $t \leq n-k-1$, then we need $[(n-k+1) - t]$ independent vectors to cover $S_1^\perp$ from extending $V^\perp$, and we need $[(n-1) -t]$ independent vectors to cover $S_2^\perp$ from extending $V^\perp$. Since $S_1^\perp \cup S_2^\perp \subseteq \{ 0,1\}^n$, we must have $[(n-k+1) - t] + [(n-1) -t] + t \leq n$, which is equivalent to $t \geq n-k$, contradiction.\\
+If $t \geq n-k+1$, then $S_1^\perp \subseteq S_2^\perp$,
+this is impossible since $v_k$ is independent from $v_1, v_2, ..., v_{k-1}$. \\
+Thus, $t = n-k$. So $|V^\perp| = 2^{n-k}$. 
 \end{proof}
 
 \end{document}
