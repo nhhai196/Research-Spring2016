@@ -388,7 +388,7 @@ If we sample $X$ twice, then the probability we get the same result, denoted $Co
 $\sum\limits_{i = 0}^{N-1} {x_i}^2 = N \cdot \| X \|_2^2$.
 \end{theorem}
 
-\begin{definition}
+\begin{definition}[Flat Distribution]
 A probability distribution function $f \colon \{ 0, 1 \}^n \rightarrow (0,1)$ is a \textit{T-flat} if there $\exists \ S \subseteq \{ 0,1 \}^n$ such that $|S| = T$ and 
 $f(x) = 
 \begin{cases}
@@ -397,12 +397,16 @@ $f(x) =
 \end{cases}$
 \end{definition}
 
+\begin{lemma} For every $\alpha \geq \beta$, every $\alpha$-flat distribution can be written as the sum of $\beta$-flat distributions. 
+\end{lemma}
+
 \begin{theorem}
 For every integer $k \geq 0$, if $H_\infty(X) \geq k$, then 
-$X = \sum \alpha_i X_i$, where each $X_i$ is a \textit{$2^k$-flat}, $\alpha_i \in [0,1] \text{for every} \ i$, and $\sum\limits_i \alpha_i = 1$.
+$X = \sum \alpha_i X_i$, where each $X_i$ is a \textit{$2^k$-flat}, $\alpha_i \in [0,1] \text{ for every} \ i$, and $\sum\limits_i \alpha_i = 1$.
 \end{theorem}
 
 \begin{proof}
+Let $S$ be the set of all the probability distributions $X$ with $H_{\infty}(X) \geq k$, then S is a compact convex polytope in $\mathbb{R}^N$. The set of all $2^k$-flat distributions is the set of vertices (extreme points) of $S$. In a compact convex set, every point can be written as a convex combination of its vertices. Hence, every distribution $X$ with  $H_{\infty}(X) \geq k$ can be written as a convex combination of $k$-flat distributions. 
 
 \end{proof}
 
@@ -411,7 +415,7 @@ If $H_\infty(X) \geq k$, then $Col(X) \leq \frac{1}{2^k}$.
 \end{theorem}
 
 \begin{proof}
-By theorem 2.5, we can write $X$ as $X = \sum\limits_i \alpha_i X_i$, where each $X_i$ is a $2^k\text{-flat}$ $\sum \alpha_i = 1$, and $\alpha_i \in [0,1] \text{for every} \ i$. It is obvious that $Col(X_i) = \| X_i \|_2^2 = \frac{1}{2^k}$.\\
+By theorem 2.5, we can write $X$ as $X = \sum\limits_i \alpha_i X_i$, where each $X_i$ is a $2^k\text{-flat}$, $\sum \alpha_i = 1$, and $\alpha_i \in [0,1] \text{for every} \ i$. It is obvious that $Col(X_i) = \| X_i \|_2^2 = \frac{1}{2^k}$.\\
 Collision functions are convex, so by Jensen's inequality, 
 $$Col(X) = Col \left( \sum\limits_i \alpha_i X_i \right)
 \leq \sum\limits_i \alpha_i \cdot Col(X_i)
