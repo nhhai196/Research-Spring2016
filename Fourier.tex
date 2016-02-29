@@ -411,29 +411,38 @@ We say that $\mathcal{D}$ is $\alpha\text{-bias}$ if $\widehat{D}(S) \leq \frac{
 $$SD(A,B) = \frac{1}{2} \sum\limits_{i} |a_i - b_i |$$
 \end{definition}
 \begin{theorem}
-Let $\mathcal{D}$ be a small bias distribution with $\widehat{\mathcal{D}}(S) \leq \frac{\alpha}{N}$ for all $S$, let $\mathcal{M}$ be a min entropy source such that $H_\infty(\mathcal{M}) \geq k$, and let $\mathcal{U}$ be  the uniform distribution over $n$-bits string. Then $$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U}) \leq \frac{\alpha}{2^{k+1}}$$
+Let $\mathcal{D}$ be a small bias distribution with $\widehat{\mathcal{D}}(S) \leq \frac{\alpha}{N}$ for all $S$, let $\mathcal{M}$ be a min entropy source such that $H_\infty(\mathcal{M}) \geq k$, and let $\mathcal{U}$ be  the uniform distribution over $n$-bits string. Then $$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U}) \leq \frac{\alpha \sqrt{N}}{2^{1+k/2}}$$
 \end{theorem}
 
-\begin{proof} Let $f = \mathcal{D} \oplus \mathcal{M}$, then 
+\begin{proof} 
 \begin{align*}
 SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U})
 &= \frac{1}{2} \sum\limits_i |(\mathcal{D} \oplus \mathcal{M})(i) - \mathcal{U}(i) | \\
 & \leq \frac{1}{2}  \sqrt{N \sum\limits_i [(\mathcal{D} \oplus \mathcal{M})(i) - \mathcal{U}(i)]^2} \\
 &= \frac{1}{2}  \sqrt{N^2 \cdot \| (\mathcal{D} \oplus \mathcal{M}) - \mathcal{U} \|_2^2} \\
+& = \frac{N}{2} \sqrt{\sum\limits_{S} 
+	[\widehat{\mathcal{D} \oplus \mathcal{M}}(S) - \mathcal{U}(S)]^2} \\
 & = \frac{N}{2} \sqrt{\sum\limits_{S \neq \emptyset} 
-\widehat{\mathcal{D} \oplus \mathcal{M}}(S)^2}
+	\widehat{\mathcal{D} \oplus \mathcal{M}}(S)^2} \\
 \end{align*}
+%&= \frac{N}{2} \sqrt{\sum\limits_{S \neq \emptyset}
+%	N^2 \cdot \widehat{\mathcal{D}}(S)^2 \cdot \widehat{\mathcal{M}}(S)^2} \\
+%&\leq \frac{N}{2} \sqrt{\sum\limits_{S \neq \emptyset}
+%	N^2 \cdot (\frac{\alpha}{N})^2 \cdot \widehat{\mathcal{M}}(S)^2} \\
+%&= \frac{\alpha N}{2} \sqrt{\sum\limits_{S \neq \emptyset} \widehat{\mathcal{M}}(S)^2} \\
+%\leq 
 By convolution,
 \begin{align*}
-\widehat{\mathcal{D} \oplus \mathcal{M}}(S) 
-&= N \cdot \widehat{\mathcal{D} * \mathcal{M}} (S) \\
-&= N \cdot \widehat{\mathcal{D}}(S) \cdot \widehat{\mathcal{M}}(S) \\
-& \leq N \cdot \frac{\alpha}{N} \cdot \frac{1}{N \cdot 2^k} \\
-&= \frac{\alpha}{N \cdot 2^k}
+\sum\limits_{S \neq \emptyset} \widehat{\mathcal{D} \oplus \mathcal{M}}(S)^2 
+&= \sum\limits_{S \neq \emptyset} N^2 \cdot \widehat{\mathcal{D} * \mathcal{M}} (S)^2 \\
+&= N^2 \sum\limits_{S \neq \emptyset} \widehat{\mathcal{D}}(S)^2 \cdot \widehat{\mathcal{M}}(S)^2 \\
+& \leq N^2 \cdot  \sum\limits_{S \neq \emptyset} (\frac{\alpha}{N})^2 \cdot \widehat{\mathcal{M}}(S)^2 \\
+&= \alpha^2 \cdot \sum\limits_{S \neq \emptyset} \widehat{\mathcal{M}}(S)^2 \\
+& \leq \frac{\alpha^2}{N \cdot 2^k}
 \end{align*}
 Hence, 
 $$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U}) 
-\leq \frac{\alpha}{2^{k+1}} $$
+\leq \frac{\alpha \sqrt{N}}{2^{1+k/2}}$$
 \end{proof}
 
 \appendix
