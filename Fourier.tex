@@ -361,7 +361,11 @@ $X = \sum \alpha_i X_i$, where each $X_i$ is a \textit{$2^k$-flat}, $\alpha_i \i
 \end{theorem}
 
 \begin{proof}
-Let $S$ be the set of all the probability distributions $X$ with $H_{\infty}(X) \geq k$, then S is a compact convex polytope in $\mathbb{R}^N$. The set of all $2^k$-flat distributions is the set of vertices (extreme points) of $S$. Since $S$ is a compact convex set, $S$ equals to the set of all convex combinations of its vertices. Hence, every distribution $X$ with  $H_{\infty}(X) \geq k$ can be written as a convex combination of $k$-flat distributions. 
+Let $S$ be the set of all the probability distributions $X$ with $H_{\infty}(X) \geq k$, then S is a compact (closed and bounded) convex set in $\mathbb{R}^N$.
+\begin{claim} The set of all $2^k$-flat distributions is the set of all extreme points of $S$.
+\end{claim}
+First, every $2^k$-flat distribution $X$ is an extreme point of $S$ since if $X = \alpha Y + (1-\alpha)Z$ for some $Y, Z \in S$ and $\alpha\in [0,1]$, then $X = Y = Z$. Next, we want to show that for any $X$, which is not a $2^k$-flat distribution, $X$ is not an extreme point of $S$. Since $X$ is not a $2^k$-flat distribution, there exist $i<j$ such that $0 < x_i, x_j < \frac{1}{2^k}$. So we can choose $\delta > 0$ such that $x_i + \delta, x_j + \delta \leq \frac{1}{2^k}$ and $x_i - \delta, x_j - \delta \geq 0$. Now let $y_k = z_k = x_k$ for every $k \neq i, k \neq j$,  $y_i = x_i + \delta$, $y_j = x_j - \delta$, $z_i = x_i - \delta$, and $z_j = x_j + \delta$. Then $Y, Z \in S$ and $X = \frac{1}{2} Y + \frac{1}{2} Z$, which implies that $X$ is not an extreme point. \\ 
+Back to the problem, since $S$ is a compact convex set, the set of all convex combinations of its vertices is identical to $S$. Hence, every distribution $X$ with  $H_{\infty}(X) \geq k$ can be written as a convex combination of $k$-flat distributions. 
 
 \end{proof}
 
