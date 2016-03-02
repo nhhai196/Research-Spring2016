@@ -193,37 +193,92 @@ From Theorem 1.4, the set of all $\chi_S$ is an orthonormal set. Also, there are
 The set of all $\chi_S$ is called the \textit{the Fourier basis}.
 
 \section{Fourier Transform}
-\begin{definition} [Fourier transform function]
-For each $S \subseteq [n]$, we define the Fourier transform of $f$ as following: 
+\begin{definition} 
+For each $S \subseteq [n]$, we define the Fourier transform of $f$ at $S$ as following: 
  $$\widehat{f}(S) \defeq \mathbb{E}[f \cdot \chi_S] = \langle f, \chi_S \rangle $$
 \end{definition}
 
+\begin{definition}
+[Fourier transform] The mapping $\mathcal{F} : f \mapsto \widehat{f}$ is called the Fourier transform. 
+\end{definition}
+
+If we view functions $f, \widehat{f}$ as $N$-dimensional vectors, then we can write the Fourier transform as the product of $f$ and some matrix $F$ as following: \\
+\begin{align*}
+\mathcal{F}(f) 
+& = f \cdot F \\
+& = \frac{1}{N} \left( f(0), f(1), \cdots , f(N-1) \right)
+	 \left( \begin{array}{cccc}
+		\chi_0(0)  &  \chi_1(0)   & \cdots  & \chi_{N-1}(0) \\
+		\chi_0(1)  &  \chi_1(1)   & \cdots  & \chi_{N-1}(1) \\
+		\vdots     & \vdots       & \ddots  & \vdots       \\
+	    \chi_0(N-1)& \chi_1(N-1)  & \cdots  & \chi_{N-1}(N-1)	
+\end{array} \right) \\ 
+&= (\widehat{f}(0), \widehat{f}(1), \cdots, \widehat{f}(N-1)) \\
+& = \widehat{f}
+\end{align*}
+where $F_{ij} = \frac{\chi_i(j)}{N}$. Since $\chi_i(j) = \chi_j(i)$, $F$ is symmetric. 
+
+\begin{lemma}
+$F$ is invertible
+\end{lemma}
+
+\begin{proof}
+We have 
+$$(F \cdot F)_{ij} = \frac{1}{N^2}\sum\limits_{k=0}^{N-1} 
+\langle \chi_i(k), \chi_j(k) \rangle $$ 
+Based on Theorem 1.4, it is easy to see that $$(F \cdot F)_{ij} = 
+\begin{cases}
+	 \frac{1}{N^2} & \text{ if } i = j \\
+	 0             & \text{otherwise} \end{cases} $$
+So $F \cdot F = N^2 \cdot I$, which implies that $F$ is invertible
+\end{proof}
+
 \begin{theorem}
-The mapping $\mathcal{F} : f \rightarrow \widehat{f}$ is linear.
+The mapping $\mathcal{F}$ is linear.
 \end{theorem}
 
 \begin{proof}
-This follows from the properties of inner product. \center
-$\langle af + bg, \chi_S \rangle = 
+This follows from the properties of inner product. For any $S$,
+$$\widehat{af+bg}(S) =
+ \langle af + bg, \chi_S \rangle = 
  \langle af, \chi_S \rangle + \langle bg, \chi_S \rangle = 
  a\langle f, \chi_S \rangle + b \langle g, \chi_s \rangle =
- a \widehat{f} + b \widehat{g} $
+ a \widehat{f}(S) + b \widehat{g}(S) $$
+Thus, $\widehat{af+bg} =   a \widehat{f} + b \widehat{g}$, which means $
+\mathcal{F}$ is linear. \\
+Here is another way to show that.
+ $$\widehat{af+bg} = \mathcal{F}(af + bg) = (af+ bg) F = 
+ af F + bg  F = a(f F) + b (g F) = a\widehat{f} + b \widehat{g} $$
 \end{proof}
-
-The linear map $\mathcal{F} : f \rightarrow \widehat{f}$ is called the \textit{Fourier transform }.
 
 \begin{theorem}
 The linear map $\mathcal{F}$ is a bijection.
 \end{theorem} 
 
 \begin{proof}
+It suffices to show that $F$ is invertible, which follows immediately from Lemma 1.8.
+
+\section{Parseval's Identity}
 Since the set of $\chi_S$ forms an orthonormal basis, 
 \begin{equation}
 f = \sum \limits_{S} \widehat{f}(S) \chi_S.
 \end{equation}
-Suppose $\mathcal{F}(f_1) = \mathcal{F}(f_2)$, i.e, $\widehat{f_1}(S) = \widehat{f_2}(S)$ for every $S$, then it is followed from equation (1.1) that $f_1 = f_2$. So $\mathcal{F}$ is injective. \\
-Also, equation (1.1) implies that for every $\widehat{f}$, there exists a function $f = \sum \limits_{S} \widehat{f}(S) \chi_S $ such that $\mathcal{F}(f) = \widehat{f}$, which means that $\mathcal{F}$ is surjective. \\
-Thus, $\mathcal{F}$ is a bijection as derived 
+Hence,
+\begin{equation}
+\langle f, g \rangle = \sum\limits_{S} \widehat{f}(S) \widehat{g}(S)
+\end{equation}
+In particular, when f = g we get Parseval's identity:
+\begin{equation}
+\| f \|_2^2 = \sum\limits_{S} \widehat{f}(S)^2
+\end{equation}
+This also implies:
+\begin{equation}
+\| f - g \|_2^2 = \sum\limits_{S} (\widehat{f}(S) - \widehat{g}(S))^2
+\end{equation}
+
+%Suppose $\mathcal{F}(f_1) = \mathcal{F}(f_2)$, i.e, $\widehat{f_1}(S) = \widehat{f_2}(S)$ for every $S$, then it is followed from equation (1.1) that $f_1 = f_2$. So $\mathcal{F}$ is injective. \\
+%Also, equation (1.1) implies that for every $\widehat{f}$, there exists a function $f = \sum \limits_{S} \widehat{f}(S) \chi_S $ such that $\mathcal{F}(f) = \widehat{f}$, which means that $\mathcal{F}$ is surjective. \\
+%Thus, $\mathcal{F}$ is a bijection as derived 
 \end{proof}
 
 \section{Convolution}
@@ -315,25 +370,11 @@ If $S \in V^\perp$, then $S \in {\langle v_i \rangle}^\perp$ for every $i$, so $
 If $S \not\in V^\perp$, then there exits some $i$ such that $S \not\in {\langle v_i \rangle}^\perp$, which implies $\widehat{f_i}(S) = 0$. Hence, $\widehat{f}(S) = 0$
 \end{proof}
 
-\section{Parseval's Identity}
-Because the $\chi_S$ form an orthonormal basis, we have the following equality:
-\begin{equation}
-\langle f, g \rangle = \sum\limits_{S} \widehat{f}(S) \widehat{g}(S)
-\end{equation}
-In particular, when f = g we get Parseval's identity:
-\begin{equation}
-\| f \|_2^2 = \sum\limits_{S} \widehat{f}(S)^2
-\end{equation}
-This also implies:
-\begin{equation}
-\| f - g \|_2^2 = \sum\limits_{S} (\widehat{f}(S) - \widehat{g}(S))^2
-\end{equation}
-
 \chapter{Min Entropy}
 Let $X = (x_0, x_1, ..., x_{N-1})$ be a distribution function of a random variable over $\{ 0, 1 \}^n$, where $N \defeq 2^n$. 
 \begin{definition}[Min Entropy]
 We define the min entropy of $X$ as follow.\center
-$H_\infty (X) \defeq \max\limits_{i} (- \log x_i)$
+$H_\infty (X) \defeq \min\limits_{i} (- \log x_i)$
 \end{definition}
 
 This implies that if $H_\infty(X) \geq k \ \text{then } \ x_i \leq \frac{1}{2^k} $ for every $0 \leq i \leq N-1$
@@ -447,6 +488,31 @@ By convolution,
 Hence, 
 $$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U}) 
 \leq \frac{\alpha \sqrt{N}}{2^{1+k/2}}$$
+\end{proof}
+
+\begin{theorem}
+Let $M$ be a distribution with min entropy $k$ over $\{0 , 1 \}^n$, let $G_0, G$ be $1 by \frac{n}{2}$ and $\frac{n}{2} by n$ matrices respectively, and let $X$ be a distribution over $\{ 0, 1 \} ^ \frac{n}{2}$. Then 
+$$SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \leq \frac{1}{2^k}$$
+\end{theorem}
+
+\begin{proof}
+For simplicity, let $A = (XG_0, XG \oplus M | G_0 , G)$ and 
+$B = (U, XG \oplus M | G_0 , G)$.
+\begin{align*}
+& SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \\
+= & \underset{G_0, G} {\mathbb{E}} \left[
+	SD (A,B) \right] \\
+= & \underset{G_0, G} {\mathbb{E}} \left[
+	\frac{1}{2} \sum\limits_{i,j} | A(i)- B (i)| \right] \\
+\leq & \frac{1}{2} \underset{G_0, G} {\mathbb{E}} \left[ \sqrt{
+	2N \cdot \sum\limits_{i} ((A(i) - B(i) )^2 } \right] \\	
+\leq & \frac{\sqrt{2N}}{2} \sqrt{ \underset{G_0, G} {\mathbb{E}} \left[ 
+	\sum\limits_{i} (A(i) - B(i) )^2 \right] } \\
+= & \frac{\sqrt{2N}}{2} \sqrt{
+	\sum\limits_{S} \underset{G_0, G} {\mathbb{E}} \left[  
+		(\widehat{A}(S) -
+	     \widehat{B} (S) )^2 \right] }\\			                                 
+\end{align*}
 \end{proof}
 
 \appendix
