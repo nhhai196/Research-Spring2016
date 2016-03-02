@@ -490,7 +490,7 @@ $$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U})
 \end{proof}
 
 \begin{theorem}
-Let $M$ be a distribution with min entropy $k$ over $\{0 , 1 \}^n$, let $G_0, G$ be $1 by \frac{n}{2}$ and $\frac{n}{2} by n$ matrices respectively, and let $X$ be a distribution over $\{ 0, 1 \} ^ \frac{n}{2}$. Then 
+Let $M$ be a distribution with min entropy $k$ over $\{0 , 1 \}^n$, let $G_0, G$ be $1 \times \frac{n}{2}$ and $\frac{n}{2} \times n$ matrices respectively, and let $X$ be a distribution over $\{ 0, 1 \} ^ \frac{n}{2}$. Then 
 $$SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \leq \frac{1}{2^k}$$
 \end{theorem}
 
@@ -513,6 +513,8 @@ $B = (U, XG \oplus M | G_0 , G)$.
 	     \widehat{B} (S) )^2 \right] }\\			                                 
 \end{align*}
 \end{proof}
+
+\chapter{Bourgain's Extractor}
 
 \appendix
 
@@ -562,5 +564,48 @@ this is impossible since $v_k$ is independent from $v_1, v_2, ..., v_{k-1}$. \\
 Thus, $t = n-k$. So $|V^\perp| = 2^{n-k}$. 
 \end{proof}
 
+\section{Statistical Different between Two Joint Distributions}
+\begin{theorem}
+Let $A,B$ be some probability distributions over the same sample space, and let $C$ be a probability distribution. Then 
+$$ SD \{(A,C), (B,C)\} 
+= \underset{c \sim C} {\mathbb{E}} \left[ SD \{(A | C = c), (B | C=c)\} \right] $$
+\end{theorem}
+\begin{proof}
+\begin{align*}
+  SD \{(A,C), (B,C)\} 
+& = \frac{1}{2} \sum\limits_{i,c} | (A,C)(i,c) - (B,C)(i,c)| \\
+& = \frac{1}{2} \sum\limits_{i,c} | Pr(C = c) \cdot Pr(A = i | C =c) -
+	                                Pr(C = c) \cdot Pr(B = i | C =c) |\\ 
+& = \sum\limits_{c \sim C} \left( Pr(C = c) \cdot  \frac{1}{2} \sum\limits_{i} |Pr(A = i | C =c) - Pr(B = i | C =c) | \right) \\
+& = \sum\limits_{c \sim C}  Pr(C = c) \cdot 
+	SD \{(A | C = c), (B | C= c) \} \\ 
+& = \underset{c \sim C} {\mathbb{E}} \left[ SD \{(A | C = c), (B | C=c)\} \right]		                                
+\end{align*}
+\end{proof}
+
+\section{Group Basics}
+\subsection{Notation}
+We reverse the variable $p$ to denote primes.
+
+$\mathbb{F}_p$ denotes the field of size $p$.
+
+$G$ denotes a finite abelian group. 
+
+$\mathbb{C}$ denotes the set of complex numbers.
+
+\begin{definition}
+We say $\psi : G \rightarrow \mathbb{C}$ is a character if $\psi$ is a homomorphism. 
+\end{definition}
+
+\begin{definition}
+We say a map $e : G \times G  \rightarrow \mathbb{C}$ is a bilinear map if it is a homomorphism in each variable. 
+\end{definition}
+\begin{theorem}
+For every abelian group $G$, there exists a symmetric non-degenerate bilinear $e : G \times G \rightarrow \mathcal{C}$ 
+\end{theorem}
+\subsection{Dual of a finite Abelian Group}
+\begin{theorem}
+Every ﬁnite abelian group $G$ is isomorphic to its character group $G^\land$
+\end{theorem}
 \end{document}
 
