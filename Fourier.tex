@@ -225,12 +225,12 @@ $F$ is invertible
 \begin{proof}
 We have 
 $$(F \cdot F)_{ij} = \frac{1}{N^2}\sum\limits_{k=0}^{N-1} 
-\langle \chi_i(k), \chi_j(k) \rangle $$ 
+ \chi_i(k) \cdot \chi_j(k) = \frac{1}{N} \langle \chi_i, \chi_j \rangle $$ 
 Based on Theorem 1.4, it is easy to see that $$(F \cdot F)_{ij} = 
 \begin{cases}
-	 \frac{1}{N^2} & \text{ if } i = j \\
+	 \frac{1}{N} & \text{ if } i = j \\
 	 0             & \text{otherwise} \end{cases} $$
-So $F \cdot F = N^2 \cdot I$, which implies that $F$ is invertible
+So $F \cdot F = N \cdot I$, which implies that $F$ is invertible
 \end{proof}
 
 \begin{theorem}
@@ -490,13 +490,42 @@ $$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U})
 \end{proof}
 
 \begin{theorem}
-Let $M$ be a distribution with min entropy $k$ over $\{0 , 1 \}^n$, let $G_0, G$ be $1 \times \frac{n}{2}$ and $\frac{n}{2} \times n$ matrices respectively, and let $X$ be a distribution over $\{ 0, 1 \} ^ \frac{n}{2}$. Then 
-$$SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \leq \frac{1}{2^k}$$
+Let $M$ be a distribution with min entropy $k$ over $\{0 , 1 \}^n$, let $G_0 \sim 1 \times \frac{n}{2}$, $G \sim \frac{n}{2} \times n$, and let $X$ be a uniform distribution over $\{ 0, 1 \} ^ \frac{n}{2}$. Then 
+$$SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \leq  \cdots $$
 \end{theorem}
 
 \begin{proof}
-For simplicity, let $A = (XG_0, XG \oplus M | G_0 , G)$ and 
+For convenience, let $A = (XG_0, XG \oplus M | G_0 , G)$ and 
 $B = (U, XG \oplus M | G_0 , G)$.
+
+\begin{claim}% \widehat{C}(S_C) \cdot \widehat{D | C}(S_D)
+For any distributions $C,D$, 
+$$\widehat{(C,D)}(S) = \cdots  \text{, where } S = S_CS_D $$
+\end{claim}
+
+\begin{proof}
+\begin{align*}
+\widehat{(C,D)}(S) 
+& = \langle (C,D), \chi_S \rangle \\
+& = \frac{1}{2N} \sum\limits_{(c,d)}
+	(C,D)(c,d) \cdot \chi_S(c,d) \\
+& = \frac{1}{2N} \sum\limits_{(c,d)}
+	C(c) \cdot (D | C = c)(d) \cdot \chi_{S_C}(c) \cdot \chi_{S_D}(d) \\
+& = \frac{1}{2N} \sum\limits_{c} \left
+				 [C(c) \cdot \chi_{S_C}(c) \cdot 
+				 \sum\limits_{d} (D | C = c)(d)	\chi_{S_D}(d) \right] \\
+& = \frac{1}{2} \sum\limits_{c} \left
+				 [C(c) \cdot \chi_{S_C}(c) \cdot 
+				 \widehat{(D|C=c) }(S_D) \right] \\	
+\end{align*}							
+\end{proof}
+
+\begin{claim}
+For any $S \subseteq [n+1]$, $\widehat{A}(S) = \widehat{B}(S)$ if $S_1 = 0$, and 
+$\widehat{B}(S) = 0$ if $S_1 = 1$.
+\end{claim}
+
+Back to the problem,
 \begin{align*}
 & SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \\
 = & \underset{G_0, G} {\mathbb{E}} \left[
@@ -510,7 +539,10 @@ $B = (U, XG \oplus M | G_0 , G)$.
 = & \frac{\sqrt{2N}}{2} \sqrt{
 	\sum\limits_{S} \underset{G_0, G} {\mathbb{E}} \left[  
 		(\widehat{A}(S) -
-	     \widehat{B} (S) )^2 \right] }\\			                                 
+	     \widehat{B} (S) )^2 \right] }\\	
+= & \frac{\sqrt{2N}}{2} \sqrt{
+	\sum\limits_{S_1 = 1} \underset{G_0, G} {\mathbb{E}} \left[  
+		\widehat{A}(S)^2 \right] }	     		                                 
 \end{align*}
 \end{proof}
 
@@ -564,7 +596,7 @@ this is impossible since $v_k$ is independent from $v_1, v_2, ..., v_{k-1}$. \\
 Thus, $t = n-k$. So $|V^\perp| = 2^{n-k}$. 
 \end{proof}
 
-\section{Statistical Different between Two Joint Distributions}
+\section{Statistical Distance between Two Joint Distributions}
 \begin{theorem}
 Let $A,B$ be some probability distributions over the same sample space, and let $C$ be a probability distribution. Then 
 $$ SD \{(A,C), (B,C)\} 
