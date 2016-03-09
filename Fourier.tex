@@ -492,7 +492,7 @@ $$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U})
 \begin{theorem}
 Let $M$ be a distribution with min entropy $k$ over $\{0 , 1 \}^n$, let $G_0 \sim 1 \times \frac{n}{2}$, $G \sim \frac{n}{2} \times n$, and let $X$ be a uniform distribution over $\{ 0, 1 \} ^ \frac{n}{2}$. Then 
 $$SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \leq 
-\frac{1}{2^{1+k/2+n/4}}$$
+\frac{\sqrt{N}}{2^{k/2}}$$
 \end{theorem}
 
 \begin{proof}
@@ -508,7 +508,7 @@ $\widehat{B_{G_0,G}}(S) = 0$ if $S_1 = 1$.
 \begin{claim}
 For any set $S \subseteq [n+1]$ with $S_1 =1$, 
 $$\underset{G_0, G} {\mathbb{E}} 
-	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{(2N)^2 \cdot \sqrt N} $$
+	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{(2N)^2 \cdot N} $$
 \end{claim}
 
 \noindent \textit{Proof.}
@@ -534,8 +534,8 @@ $$Pr[G_0 \neq  \underset{i \in S_{>1}} {\oplus G_{i-1}}]
 \geq Pr[G_0 \in {\langle G_{i-1} : i \in S \rangle}] \geq 1 - \frac{1}{\sqrt{N}}$$
 
 $$\underset{G_0, G} {\mathbb{E}} 
-	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{\sqrt{N}} \cdot (\frac{1}{2N})^2 
-	= \frac{1}{(2N)^2 \cdot \sqrt{N}}$$
+	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{N} \cdot (\frac{1}{2N})^2 
+	= \frac{1}{(2N)^2 \cdot N}$$
 
 Back to the problem,
 \begin{align*}
@@ -561,19 +561,19 @@ Back to the problem,
 		\widehat{(XG_0, XG |G_0, G)}(S))^2 \right] } \\		
 = & \frac{(2N)^{3/2}}{2} \sqrt{
 	\sum\limits_{S_1 = 1} \underset{G_0, G} {\mathbb{E}} \left[  
-		\widehat{(O, M)}(S)^2 \cdot 
+		(2N)^2 \cdot \widehat{(O, M)}(S)^2 \cdot 
 		\widehat{(XG_0, XG |G_0, G)}(S)^2 \right] } \\
-=& \frac{(2N)^{3/2}}{2} \sqrt{
+=& \frac{(2N)^{5/2}}{2} \sqrt{
 	\sum\limits_{S_1 = 1} \widehat{(O, M)}(S)^2 \cdot 
 		\underset{G_0, G} {\mathbb{E}} \left[  
 		\widehat{A'_{G_0,G}}(S)^2 \right] } \\	
-=& \frac{(2N)^{3/2}}{2} \sqrt{
+=& \frac{(2N)^{5/2}}{2} \sqrt{
 	\sum\limits_{S_1 = 1} \widehat{(O, M)}(S)^2 \cdot 
-		\frac{1} {(2N)^2 \cdot \sqrt{N}} }	\\
-\leq &	\frac{(2N)^{3/2}}{2} \sqrt{
+		\frac{1} {(2N)^2 \cdot N} }	\\
+\leq &	\frac{(2N)^{5/2}}{2} \sqrt{
 	\frac{1}{2N \cdot 2^k} \cdot 
-		\frac{1} {(2N)^2 \cdot \sqrt{N}} }\\
-= & \frac{1}{2^{1+k/2} \cdot N^{1/4}}						     		                                 
+		\frac{1} {(2N)^2 \cdot N} }\\
+= & \frac{\sqrt{N}}{2^{k/2}}						     		                                 
 \end{align*}
 \end{proof}
 
