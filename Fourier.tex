@@ -639,5 +639,88 @@ For every abelian group $G$, there exists a symmetric non-degenerate bilinear $e
 \begin{theorem}
 Every ﬁnite abelian group $G$ is isomorphic to its character group $G^\land$
 \end{theorem}
+
+\section{Product Graph}
+\begin{definition}
+$D = (a,b,c,d)$ is a $2 \times 2$ distribution graph if and only if 
+\begin{itemize}
+\item [1.] $a+b+c+d=1$,
+\item [2.] $a,b,c,d \in [0,1]$.   
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+$G = (x,y,z,t)$ is a $2 \times 2$ product graph if and only if 
+\begin{itemize}
+\item [1.] $G$ is a distribution graph,
+\item [2.] $xt = yz$, or $x = t = 0$, or $y =z = 0$.
+\end{itemize}
+\end{definition}
+
+ 
+Let $\mathbb{G}$ be the space of all $2 \times 2$ product graphs and let $\mathbb{D}$ be the space of all $2 \times 2$ distribution graphs. We want to find 
+$$ D^* = \underset{D \in \mathbb{D}} {argmax} \ dist(G, \mathbb{G})$$
+$$m = \underset{D \in \mathbb{D}} {\max} \ dist(G, \mathbb{G})$$
+Let $D = (a,b,c,d)$ be any $2 \times 2$ distribution graph. Without lost of generality, assume $a \geq d$,  $b \geq c$, and $ad \geq bc$ 
+
+\begin{claim}
+$dist(D, \mathbb{G}) \leq f(a,b,c,d)$, \\
+where $f(a,b,c,d) = \min \{(b+c), \frac{(ad - bc)}{a+b},
+\frac{1}{2}(| \sqrt{a} - a - b| + |\sqrt{a} - a - c|, |(1 - \sqrt{a})^2 -d|) \}$
+\end{claim}
+
+\begin{proof}
+Let $G = (x,y,z,t)$ be a product graph.  
+$$dist(D,\mathbb{G}) \leq dist(D,G) = \frac{1}{2} (|a-x| + |b-y| + |c-z| + |d-t|)$$
+So if we can find some graphs $G's$ such that $dist(D,G)$ equal to the three values above respectively, we are done. From the second property of distribution graph, it suggests the way to choose such $G's$.
+\begin{itemize}
+\item [1.] Choose $y = z =0$, $x = a+b$, and $t = c+d$, then $dist(D,G) = b+c$.
+\item [2.] Choose $xt = yz$, $x = a$, $y =b$, $z = \frac{(c+d)a}{a+b}$, and $\frac{(c+d)b}{a+b}$, then 
+$$dist(D,G) = \frac{1}{2}(|c - \frac{(c+d)a}{a+b}| + |d - \frac{(c+d)b}{a+b}|
+= \frac{(ad - bc)}{a+b} $$
+\item [3.] Choose $x = a$, $y = z = \sqrt{a} - a$, and $t = (1 - \sqrt{a})^2$, then 
+$$dist(D,G) = \frac{1}{2}(| \sqrt{a} - a - b| + |\sqrt{a} - a - c|, |(1 - \sqrt{a})^2 -d|) $$
+\end{itemize}
+\end{proof}
+
+\begin{claim}
+$m \leq \underset {a,b,c,d} {\max} f(a,b,c,d)$
+\end{claim} 
+\begin{claim} 
+$\underset {a,b,c,d} {\max} f(a,b,c,d) = \sqrt{5} -2$
+\end{claim}
+
+\begin{proof}
+\begin{itemize}
+\item [1.] If $b(1-d) \geq ad$, then 
+$\frac{(ad - bc)}{a+b} = \frac{(ad - bc)}{1-c-d} \leq \frac{ad}{1 - d} 
+\leq \frac{(\frac{a+d}{2})^2}{1 - (\frac{a+d}{2})}$. Then 
+$$\underset {a,b,c,d} {\max} f(a,b,c,d) \leq 
+\max \min \{(1-2h), \frac{h^2}{1-h} \}$$
+where $h = (a+d)/2$
+\item [2.] If $b(1-d) = ba + b^2 + bc \leq ad$, suppose $\max \min \{(1-2h), \frac{h^2}{1-h} \} > \sqrt{5} -2$. \\
+Then $\sqrt{a} \geq a + b \geq a + c$ since $a \geq (a+b)^2 \Leftrightarrow a(a+b+c+d) \geq a^2 + 2ab + b^2 \Leftrightarrow ac + ad \geq ab + b^2$, which is true. So $d \geq (1 -\sqrt{a})^2$. Thus, 
+\begin{align*}
+& \frac{1}{2}(| \sqrt{a} - a - b| + |\sqrt{a} - a - c|, |(1 - \sqrt{a})^2 -d|) \\
+&= \frac{1}{2} (2 \sqrt{a} - 2a - (1 - a -d) + d - (1 - \sqrt{a})^2 \\
+&= d - (1 - \sqrt{a})^2 \\
+&= (\sqrt{d} + \sqrt{a} - 1)(1 + \sqrt{d} - \sqrt{a}) \\
+&\leq \sqrt{d} + \sqrt{a} - 1\\
+& \leq \sqrt{2(a+d)} - 1
+\end{align*}
+Hence, $$\underset {a,b,c,d} {\max} f(a,b,c,d) \leq 
+\max \min \{1-2h, 2 \sqrt{h} -1 \} \}$$
+\end{itemize}
+\begin{figure}
+	\centering
+    \includegraphics[scale = 0.8]{graph.jpg}
+\end{figure}
+From the graph, we can see that 
+$$\max \min \{1-2h, 2 \sqrt{h} -1, \frac{h^2}{1-h} \} = \sqrt{5} -2$$
+when $a = d = \frac{3 - \sqrt{5}}{2}$, $b = \sqrt{5} - 2$, and $c = 0$
+\end{proof}
+
+
+
 \end{document}
 
