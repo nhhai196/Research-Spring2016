@@ -647,8 +647,8 @@ $$ SD \{(A,C), (B,C)\}
 \end{proof}
 
 \begin{claim}% \widehat{C}(S_C) \cdot \widehat{D | C}(S_D)
-For any distributions $C,D$, 
-$$\widehat{(C,D)}(S) = \cdots  \text{, where } S = S_CS_D $$
+For any distributions $C,D$, for any $S = S_CS_D \subseteq [n+1]$, if $S_C = 0$, then 
+$$\widehat{(C,D)}(S) = \underset {c} {\mathbb{E}} [\widehat{(D|C=c) }(S_D)] $$
 \end{claim}
 
 \begin{proof}
@@ -665,6 +665,10 @@ $$\widehat{(C,D)}(S) = \cdots  \text{, where } S = S_CS_D $$
 & = \frac{1}{2} \sum\limits_{c} \left
 				 [C(c) \cdot \chi_{S_C}(c) \cdot 
 				 \widehat{(D|C=c) }(S_D) \right] \\	
+& = \frac{1}{2} \sum\limits_{c} \left
+				 [C(c) \cdot 
+				 \widehat{(D|C=c) }(S_D) \right] \\
+& = \underset {c} {\mathbb{E}} [\widehat{(D|C=c) }(S_D)]			 					 
 \end{align*}							
 \end{proof}
 
