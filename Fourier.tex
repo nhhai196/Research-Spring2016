@@ -47,6 +47,7 @@
 \newtheorem{definition}[theorem]{Definition} % definition numbers are dependent on theorem numbers
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{claim}[theorem]{Claim}
+\newtheorem{prop}[theorem]{Proposition}
 
 \begin{document}
 
@@ -577,6 +578,50 @@ Back to the problem,
 \end{align*}
 \end{proof}
 
+\chapter{Generalized Fourier Transform}
+The entire treatment for Fourier analysis can be generalized to functions from any finite abelian group  $\mathbb{G}$ to the set of complex numbers $\mathbb{C}$.
+
+\section{Notation}
+$\mathbb{C}:$ the set of complex numbers. \\
+$\mathbb{G}:$ a finite abelian group of order $n$.\\
+$\mathbb{C}^* = \mathbb{C} \setminus \{0\}:$ multiplicative group of complex numbers. \\\
+$\mathbb{F}_q:$ the field of size $q$ \\
+For a complex number $x$, we use $\bar{x}$ to denote the complex conjugate of $x$.
+
+\section{Inner Product}
+Let $f : \mathbb{G} \rightarrow \mathbb{C}, \text{and } g : \mathbb{G} \rightarrow \mathbb{C}$ be two functions from a finite abelian group to the complex numbers. 
+\begin{definition}
+The inner product of $f$ and $g$ is defined as 
+$$\langle f, g \rangle = \underset {x} {\mathbb{E}} [f(x) \overline{g(x)}] $$
+\end{definition}
+The $L^P$ norm of $f$ is defined as $\| f \|_{L^P} = ({\mathbb{E}_x} |f(x)|^p)^{1/p} $
+\section{Characters}
+\begin{definition} 
+A character of $\mathbb{G}$ is a homomorphism $\chi : \mathbb{G} \rightarrow \mathbb{C}$.
+\end{definition}
+$\chi$ is a trivial (principal) character if $\chi = 1$
+
+\begin{prop}
+For any non-trivial character $\chi$, 
+$$\sum\limits_{a \in \mathbb{G}} \chi(a) = 0$$
+\end{prop}
+\begin{proof}
+Since $\chi$ is a non-trivial character, there exists $b \in \mathbb{G}$ such that $\chi(b) \neq 1$. We have
+$$\chi(b) \cdot \sum\limits_{a \in \mathbb{G}} \chi(a)
+= \sum\limits_{a \in \mathbb{G}} \chi(a) \chi(b)
+= \sum\limits_{a \in \mathbb{G}} \chi(a + b)
+= \sum\limits_{a \in \mathbb{G}} \chi(a)$$
+Hence, $\sum\limits_{a \in \mathbb{G}} \chi(a) = 0$
+\end{proof}
+
+\section{Bi-linear Maps}
+\begin{definition}
+We say that a map $e : G \times G  \rightarrow \mathbb{C}$ is a bilinear map if it is a homomorphism in each variable. It is a non-degenerate if for every $x$, both $e(\cdot, x)$ and $e(x, \cdot)$ are non-trivial. It is symmetric if $e(x,y) = e(y,x)$ for every $x, y$.
+\end{definition}
+
+\begin{lemma}
+Let $e$ be the map that maps $(x,y) \mapsto \exp(2\pi xyi/r)$, then $e$ is a symmetric non-degenerate bilinear map.
+\end{lemma}
 \chapter{Bourgain's Extractor}
 
 \appendix
