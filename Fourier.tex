@@ -579,7 +579,7 @@ Back to the problem,
 \end{proof}
 
 \chapter{Generalized Fourier Transform}
-The entire treatment for Fourier analysis can be generalized to functions from any finite abelian group  $\mathbb{G}$ to the set of complex numbers $\mathbb{C}$.
+The entire treatment for Fourier analysis in chapter 1 can be generalized to functions from any finite abelian group to the set of complex numbers.
 
 \section{Notation}
 $\mathbb{C}:$ the set of complex numbers. \\
@@ -594,13 +594,23 @@ Let $f : \mathbb{G} \rightarrow \mathbb{C}, \text{and } g : \mathbb{G} \rightarr
 The inner product of $f$ and $g$ is defined as 
 $$\langle f, g \rangle = \underset {x} {\mathbb{E}} [f(x) \overline{g(x)}] $$
 \end{definition}
-The $L^P$ norm of $f$ is defined as $\| f \|_{L^P} = ({\mathbb{E}_x} |f(x)|^p)^{1/p} $
+The $L^P$ norm of $f$ is defined as $\| f \|_{p} = ({\mathbb{E}_x} |f(x)|^p)^{1/p} $
+
+\begin{prop}[Cauchy Schwartz Inequality]
+For any two functions $f, g : G \rightarrow \mathbb{C}$,
+$$| \langle f, g \rangle | \leq \|f \|_2 \cdot \| g \|_2$$
+\end{prop}
+
 \section{Characters}
 \begin{definition} 
-A character of $\mathbb{G}$ is a homomorphism $\chi : \mathbb{G} \rightarrow \mathbb{C}$.
+A character of $\mathbb{G}$ is a homomorphism $\chi : \mathbb{G} \rightarrow \mathbb{C}^*$.
 \end{definition}
-$\chi$ is a trivial (principal) character if $\chi = 1$
-
+\noindent $\chi$ is a trivial (principal) character if $\chi(a) = 1 \text{ for every } a \in G$. \\
+Clearly,
+ $$\chi(a+b) = \chi(a) \chi(b) \text{ for every } a,b \in G $$
+Hence,
+$$\chi(a)^n = \chi(na) = \chi(0) = 1$$
+Intuitively, the values of $\chi$ are $n^{th}$ roots of unity.
 \begin{prop}
 For any non-trivial character $\chi$, 
 $$\sum\limits_{a \in \mathbb{G}} \chi(a) = 0$$
@@ -614,6 +624,15 @@ $$\chi(b) \cdot \sum\limits_{a \in \mathbb{G}} \chi(a)
 Hence, $\sum\limits_{a \in \mathbb{G}} \chi(a) = 0$
 \end{proof}
 
+\begin{lemma}
+For any two characters $\chi$ and $\psi$ of $\mathbb{G}$, 
+$$ \langle \chi, \psi \rangle =
+\begin{cases}
+	1             & \text{if} \ \chi = \psi \\
+	0             & \text{otherwise}.
+\end{cases} $$
+\end{lemma}
+
 \section{Bi-linear Maps}
 \begin{definition}
 We say that a map $e : G \times G  \rightarrow \mathbb{C}$ is a bilinear map if it is a homomorphism in each variable. It is a non-degenerate if for every $x$, both $e(\cdot, x)$ and $e(x, \cdot)$ are non-trivial. It is symmetric if $e(x,y) = e(y,x)$ for every $x, y$.
@@ -622,10 +641,54 @@ We say that a map $e : G \times G  \rightarrow \mathbb{C}$ is a bilinear map if 
 \begin{lemma}
 Let $e$ be the map that maps $(x,y) \mapsto \exp(2\pi xyi/r)$, then $e$ is a symmetric non-degenerate bilinear map.
 \end{lemma}
+
+\noindent Let $G^\land$ denote the set of all characters of $G$. 
+
+\begin{lemma}
+$G^\land$ is an abelian group under pointwise multiplication. 
+\end{lemma}
+
+\begin{lemma}
+For every abelian group $G$, there exists a symmetric non-degenerate bilinear $e : G \times G \rightarrow \mathcal{C}$ 
+\end{lemma}
+
+Now fix any symmetric, non-degenerate, bilinear map $e$. For every $x \in G$, let $e_x$ denote the character $e(x,\cdot)$. The map $x \mapsto e_x$ can be shown to be an isomorphism from $G$ to $G^\land$. Thus, we have following lemma.
+
+\begin{lemma}
+Every finite abelian group $G$ is isomorphic to its character group $G^\land$
+\end{lemma}
+
+\begin{theorem}
+$G^\land$ forms an orthonormal basis in $\mathbb{C}^n$
+\end{theorem}
+This follows immediately from Lemmas 3.4 and 3.9.
+\section{Fourier Transform}
+\begin{definition}
+We define $\widehat{f} : G^\land \rightarrow \mathbb{C}$ as
+$$\widehat{f}(\chi) \defeq \langle f, \chi \rangle $$
+\end{definition}
+$\widehat{f}$ is called the Fourier transform of $f$.
+From Theorem 3.10, every function $f \in \mathbb{C}^n$ can be written as linear combinations of characters. 
+$$f = \sum\limits_{\chi \in G^\land} \widehat{f} \chi$$
+
+\begin{definition}
+The mapping $\mathcal{F} : f \mapsto \widehat{f}$ is called the Fourier transform. 
+\end{definition}
+
+\begin{prop}
+$\mathcal{F}$ is a linear, bijective mapping. 
+\end{prop}
+
 \chapter{Bourgain's Extractor}
+
 \section{Introduction and Motivation}
+
 \section{Bourgain's Extractor}
+\begin{lemma}
+Let $X$ be a distribution on a finite abelian group $G$ such that $|\mathbb{E}[\psi (X)] | \leq \epsilon$ for every nontrivial character $\psi$. Then $X$ is $\epsilon \sqrt{|G|}$ close to the uniform distribution: $\| X - U \|_1 \leq \epsilon / \sqrt{|G|}$
+\end{lemma}
 \subsection{The Hadamard Extractor}
+
 \appendix
 
 \chapter{}
@@ -740,8 +803,14 @@ We say a map $e : G \times G  \rightarrow \mathbb{C}$ is a bilinear map if it is
 For every abelian group $G$, there exists a symmetric non-degenerate bilinear $e : G \times G \rightarrow \mathcal{C}$ 
 \end{theorem}
 \subsection{Dual of a finite Abelian Group}
+Let $G^\land$ denote the set of all characters of $G$. \\
+
+\begin{lemma}
+$G^\land$ is an abelian group under point-wise product operation 
+\end{lemma}
+
 \begin{theorem}
-Every ﬁnite abelian group $G$ is isomorphic to its character group $G^\land$
+Every finite abelian group $G$ is isomorphic to its character group $G^\land$
 \end{theorem}
 
 \section{Product Graph}
