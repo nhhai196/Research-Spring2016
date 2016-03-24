@@ -594,8 +594,24 @@ Let $f : \mathbb{G} \rightarrow \mathbb{C}, \text{and } g : \mathbb{G} \rightarr
 The inner product of $f$ and $g$ is defined as 
 $$\langle f, g \rangle = \underset {x} {\mathbb{E}} [f(x) \overline{g(x)}] $$
 \end{definition}
-The $L^P$ norm of $f$ is defined as $\| f \|_{p} = ({\mathbb{E}_x} |f(x)|^p)^{1/p} $
 
+\begin{definition}
+The $L^p$ norm of $f$ is defined as $\| f \|_{p} = ({\mathbb{E}_x} |f(x)|^p)^{1/p} $
+\end{definition}
+
+\begin{definition}
+The $\ell^p$ norm of $f$ is defined as $\| f \|_{\ell ^p} = (\sum\limits_{x \in G} |f(x)|^p)^{1/p} $
+\end{definition}
+
+\begin{definition}
+The $\ell^\infty$ norm of $f$ is defined as $\| f \|_{\ell ^\infty} = \max_x |f(x)| $
+\end{definition}
+
+\noindent Some basic relations between these norms. 
+
+\begin{prop}[Triangle Inequality]
+$| \langle l,g \rangle | \leq \|f\|_1 \| g \|_{\ell^\infty}$
+\end{prop}
 \begin{prop}[Cauchy Schwartz Inequality]
 For any two functions $f, g : G \rightarrow \mathbb{C}$,
 $$| \langle f, g \rangle | \leq \|f \|_2 \cdot \| g \|_2$$
@@ -687,14 +703,60 @@ Randomness extraction is the problem of obtaining nearly uniform bits from sourc
 An extractor $\text{Ext } : \{ 0,1 \}^n \rightarrow \{0, 1 \} ^m$ is a function that takes input from a weak source with sufficient min entropy and produces nearly uniform bits. Unfortunately, deterministic extractor from one source is impossible. To overcome this difficulty, 2-source extractor, each with sufficient high min entropy, has been used. By probabilistic argument, there exists 2-source extractors in which each has min entropy polynomial of $\log n$. However, it is important to construct such functions explicitly. Hadamard extractor shows that the dot product of two sources with min entropy greater than $n/2$ is a 2-source extractor. No progress was made for a long time until Bourgain broke the half barrier, constructed a 2-source extractor with min entropy slightly less than $n/2$. For the rest of this chapter, we will focus on how to construct Bourgain's extractor.
 
 \section{Bourgain's Extractor}
-\begin{lemma}
-Let $X$ be a distribution on a finite abelian group $G$ such that $|\mathbb{E}[\psi (X)] | \leq \epsilon$ for every nontrivial character $\psi$. Then $X$ is $\epsilon \sqrt{|G|}$ close to the uniform distribution: $\| X - U \|_1 \leq \epsilon / \sqrt{|G|}$
+\begin{lemma}[XOR Lemma]
+Let $X$ be a distribution on a finite abelian group $G$ such that $|\mathbb{E}[\psi (X)] | \leq \epsilon$ for every nontrivial character $\psi$. Then $X$ is $\epsilon$-close to the uniform distribution: $\| X - U \|_{\ell^1} \leq \epsilon \sqrt{|G|}$
 \end{lemma}
 \subsection{The Hadamard Extractor}
 In this section, we will show that the dot product of two sources with min entropy greater than $n/2$ is a 2-source extractor. \\ \\
 Let $Had: \mathbb{F}^l \times \mathbb{F}^l \rightarrow \mathbb{F}$ be the dot product function, $Had(x,y) = x \cdot y$. \\ \\
 
+\begin{theorem}
+For every constant $\delta > 0$, there exists a polynomial time algorithm $Had: (\{ 0 , 1 \}^n)^2 \rightarrow \{ 0, 1 \}^m$ such that if $X, Y$ are independent $(n, (1/2 + \delta)n)$ sources, then $Had(X,Y)$ is $\epsilon$-close to uniform distribution, i.e, 
+$\mathbb{E}_Y [ \| Had(X,Y) - U_m \|_{\ell ^1}] < \epsilon$, where $m = \Omega(n)$ and $\epsilon = 2^{-\Omega(n)}$.
+\end{theorem}
 
+\begin{proof}
+For any non-trivial character $\psi$, we want to bound 
+$$bias_\psi(Had(X,Y)) = | \mathbb{E}_Y [\psi(Had(X,Y))]| = 
+\sum\limits_{y \in \mathbb{F}^l} Y(y) \sum\limits_{x \in \mathbb{F}^l} X(x) \psi(x \cdot y)$$
+so that we can apply XOR-lemma.  \\
+Notice that
+\begin{align*} 
+\sum\limits_{y \in \mathbb{F}^l} Y(y) \sum\limits_{x \in \mathbb{F}^l} X(x) \psi(x \cdot y)
+&= \sum\limits_{y \in \mathbb{F}^l} Y(y) \sum\limits_{x \in \mathbb{F}^l} X(x) e(x,y) \\
+&= \sum\limits_{y \in \mathbb{F}^l} Y(y) |\mathbb{F}|^l \langle e_y, X \rangle \\
+&= |\mathbb{F}|^l \sum\limits_{y \in \mathbb{F}^l} Y(y) \overline{\widehat{X}(y)} \\
+&= |\mathbb{F}|^{2l} |\langle Y, \widehat{X} \rangle |
+\end{align*}
+Hence, 
+\begin{align*}
+bias_\psi(X,Y)^2 
+& \leq |\mathbb{F}|^{4l} \cdot \| Y \|_2^2 \cdot \| \widehat{X} \|_2^2 
+	& \text{[by Cauchy-Schwartz]} \\
+&  =   |\mathbb{F}|^{3l} \cdot \| Y \|_2^2 \cdot \| X \|_2^2          
+    & \text{[by Parseval's Identity]} \\
+& \leq |\mathbb{F}|^{3l} \cdot \frac{1}{|\mathbb{F}| 2^{k_1}} \cdot \frac{1}{|\mathbb{F}| 2^{k_2}} \\
+&  = 2^{n - k_1 - k_2}
+\end{align*}
+where $k_1, k_2$ are min-entropy of $X,Y$ respectively. If $k_1 = k_2 = (1/2 + \delta)n$, then $bias_\psi(X,Y) \leq 2^{-\delta n}$. Applying XOR Lemma, we get $\| Had(X,Y) - U_m\|_{\ell^1} \leq 2^{-\delta n + m/2}$
+\end{proof}
+
+\subsection{Hadamard succeeds when the sources grow with addition}
+\begin{lemma}
+$bias_\psi(X,Y)^2 \leq bias_\psi(X - X, Y)$
+\end{lemma}
+
+\begin{proof}
+\begin{align*}
+bias_\psi(X,Y)^2
+& = \left( \sum\limits_{y \in \mathbb{F}^l} Y(y) \sum\limits_{x \in \mathbb{F}^l} X(x) \psi(x \cdot y)\right)^2\\
+& \leq \left( \sum\limits_{y \in \mathbb{F}^l} Y(y) \right) \cdot 
+	   \sum\limits_{y \in \mathbb{F}^l} Y(y) \left( \sum\limits_{x \in \mathbb{F}^l} X(x) \psi(x \cdot y)\right)^2 & \text{[by Cauchy Schwartz]} \\
+& = \left| \sum\limits_{y \in \mathbb{F}^l} Y(y)  \sum\limits_{x_1, x_2 \in \mathbb{F}^l} X(x_1) X(x_2) \psi(x_1 \cdot y) \psi(-x_2 \cdot y) \right| &\text{[since } e(-x,y) = -e(x,y)]\\
+& = \left| \sum\limits_{y \in \mathbb{F}^l} Y(y) \sum\limits_{x \in \mathbb{F}^l} (X - X)(x) \psi(x \cdot y) \right| \\
+&= bias_\psi(X - X, Y)
+\end{align*}
+\end{proof}
 \appendix
 
 \chapter{}
