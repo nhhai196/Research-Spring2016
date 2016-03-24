@@ -491,9 +491,9 @@ $$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U})
 \end{proof}
 
 \begin{theorem}
-Let $M$ be a distribution with min entropy $k$ over $\{0 , 1 \}^n$, let $G_0 \sim 1 \times \frac{n}{2}$, $G \sim \frac{n}{2} \times n$, and let $X$ be a uniform distribution over $\{ 0, 1 \} ^ \frac{n}{2}$. Then 
+Let $M$ be a distribution with min entropy $k$ over $\{0 , 1 \}^n$, let $G_0 \sim 1 \times m$, $G \sim m \times n$, and let $X$ be a uniform distribution over $\{ 0, 1 \} ^ m$. Then 
 $$SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \leq 
-\frac{\sqrt{N}}{2^{k/2}}$$
+\frac{1}{2^{1+m+k/2 - n/2}}$$
 \end{theorem}
 
 \begin{proof}
@@ -509,7 +509,7 @@ $\widehat{B_{G_0,G}}(S) = 0$ if $S_1 = 1$.
 \begin{claim}
 For any set $S \subseteq [n+1]$ with $S_1 =1$, 
 $$\underset{G_0, G} {\mathbb{E}} 
-	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{(2N)^2 \cdot N} $$
+	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{(2N)^2 \cdot 2^{2m}} $$
 \end{claim}
 
 \noindent \textit{Proof.}
@@ -530,13 +530,13 @@ $$ \widehat{A'_{G_0,G}}(S) = \mathbb{E}[A'_{G_0,G}(x) \cdot \chi_S(x)]
 \end{align*}
 If $G_0 = \underset{i \in S_{>1}} {\oplus G_{i-1}}$, then $\text{bias}_S (A'_{G_0, G}) = 1$, and if $G_0 \neq  \underset{i \in S_{>1}} {\oplus G_{i-1}}$ then $\text{bias}_S (A'_{G_0, G}) = 0$. \\
 $$Pr[G_0 =  \underset{i \in S_{>1}} {\oplus G_{i-1}}]  
-\leq Pr[G_0 \in {\langle G_{i-1} : i \in S \rangle}] \leq \frac{1}{2^{n/2}}= \frac{1}{\sqrt{N}}$$
+\leq Pr[G_0 \in {\langle G_{i-1} : i \in S \rangle}] \leq \frac{1}{2^m}$$
 $$Pr[G_0 \neq  \underset{i \in S_{>1}} {\oplus G_{i-1}}]  
-\geq Pr[G_0 \in {\langle G_{i-1} : i \in S \rangle}] \geq 1 - \frac{1}{\sqrt{N}}$$
+\geq Pr[G_0 \in {\langle G_{i-1} : i \in S \rangle}] \geq 1 - \frac{1}{2^m}$$
 
 $$\underset{G_0, G} {\mathbb{E}} 
-	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{N} \cdot (\frac{1}{2N})^2 
-	= \frac{1}{(2N)^2 \cdot N}$$
+	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{2^m} \cdot (\frac{1}{2N})^2 
+	= \frac{1}{(2N)^2 \cdot 2^{2m}}$$
 
 Back to the problem,
 \begin{align*}
@@ -546,35 +546,42 @@ Back to the problem,
 = & \underset{G_0, G} {\mathbb{E}} \left[
 	\frac{1}{2} \sum\limits_{i,j} | A_{G_0,G}(i)- B_{G_0,G} (i)| \right] \\
 \leq & \frac{1}{2} \underset{G_0, G} {\mathbb{E}} \left[ \sqrt{
-	2N \cdot (2N)^2 \cdot \| A_{G_0,G} - B_{G_0,G} \|_2^2 }  \right] \\	
-\leq & \frac{(2N)^{3/2}}{2} \sqrt{ \underset{G_0, G} {\mathbb{E}} \left[ 
-	\sum\limits_{i} (A_{G_0,G}(i) - B_{G_0,G}(i) )^2 \right] } \\
-= & \frac{(2N)^{3/2}}{2} \sqrt{
+	2N \cdot 2N \cdot \| A_{G_0,G} - B_{G_0,G} \|_2^2 }  \right] &\text{[by Cauchy Schwartz]} \\	
+\leq & N \underset{G_0, G} {\mathbb{E}} \left[
+	\sqrt{
+	\sum\limits_{S} 
+		(\widehat{A_{G_0,G}}(S) -
+	     \widehat{B_{G_0,G}} (S) )^2 } \right] & \text{[by Parseval's Idenity]} \\
+\leq & N \cdot \sqrt{
+	\underset{G_0, G} {\mathbb{E}} \left[ \sum\limits_{S}   
+		(\widehat{A_{G_0,G}}(S) -
+	     \widehat{B_{G_0,G}} (S) )^2 \right] } & \text{[by Jensen's Inequality]}\\
+= & N \cdot \sqrt{
 	\sum\limits_{S} \underset{G_0, G} {\mathbb{E}} \left[  
 		(\widehat{A_{G_0,G}}(S) -
-	     \widehat{B_{G_0,G}} (S) )^2 \right] }\\	
-= & \frac{(2N)^{3/2}}{2} \sqrt{
+	     \widehat{B_{G_0,G}} (S) )^2 \right] } & \text{[by linearity of expectation]}\\		
+= & N \cdot \sqrt{
 	\sum\limits_{S_1 = 1} \underset{G_0, G} {\mathbb{E}} \left[  
-		\widehat{A_{G_0,G}}(S)^2 \right] } \\
-= & \frac{(2N)^{3/2}}{2} \sqrt{
+		\widehat{A_{G_0,G}}(S)^2 \right] } & \text{[by Claim 2.13]}\\
+= & N \cdot \sqrt{
 	\sum\limits_{S_1 = 1} \underset{G_0, G} {\mathbb{E}} \left[  
 		(\widehat{(O, M)}(S) \oplus
 		\widehat{(XG_0, XG |G_0, G)}(S))^2 \right] } \\		
-= & \frac{(2N)^{3/2}}{2} \sqrt{
+= & N \cdot \sqrt{
 	\sum\limits_{S_1 = 1} \underset{G_0, G} {\mathbb{E}} \left[  
 		(2N)^2 \cdot \widehat{(O, M)}(S)^2 \cdot 
-		\widehat{(XG_0, XG |G_0, G)}(S)^2 \right] } \\
-=& \frac{(2N)^{5/2}}{2} \sqrt{
+		\widehat{(XG_0, XG |G_0, G)}(S)^2 \right] } &\text{[by convolution]}\\
+=& 2N^2 \cdot \sqrt{
 	\sum\limits_{S_1 = 1} \widehat{(O, M)}(S)^2 \cdot 
 		\underset{G_0, G} {\mathbb{E}} \left[  
 		\widehat{A'_{G_0,G}}(S)^2 \right] } \\	
-=& \frac{(2N)^{5/2}}{2} \sqrt{
+=& 2N^2 \cdot  \sqrt{
 	\sum\limits_{S_1 = 1} \widehat{(O, M)}(S)^2 \cdot 
-		\frac{1} {(2N)^2 \cdot N} }	\\
-\leq &	\frac{(2N)^{5/2}}{2} \sqrt{
+		\frac{1} {(2N)^2 \cdot 2^{2m}} }	\\
+\leq &	2N^2 \cdot \sqrt{
 	\frac{1}{2N \cdot 2^k} \cdot 
-		\frac{1} {(2N)^2 \cdot N} }\\
-= & \frac{\sqrt{N}}{2^{k/2}}						     		                                 
+		\frac{1} {(2N)^2 \cdot 2^{2m}} }
+=  \frac{1}{2^{1+m+k/2 - n/2}}						     		                                 
 \end{align*}
 \end{proof}
 
