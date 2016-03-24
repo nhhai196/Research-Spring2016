@@ -537,8 +537,7 @@ $$Pr[G_0 \neq  \underset{i \in S_{>1}} {\oplus G_{i-1}}]
 $$\underset{G_0, G} {\mathbb{E}} 
 	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{2^m} \cdot (\frac{1}{2N})^2 
 	= \frac{1}{(2N)^2 \cdot 2^{2m}}$$
-
-Back to the problem,
+%Back to the problem,
 \begin{align*}
 & SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \\
 = & \underset{G_0, G} {\mathbb{E}} \left[
@@ -574,15 +573,15 @@ Back to the problem,
 =& 2N^2 \cdot \sqrt{
 	\sum\limits_{S_1 = 1} \widehat{(O, M)}(S)^2 \cdot 
 		\underset{G_0, G} {\mathbb{E}} \left[  
-		\widehat{A'_{G_0,G}}(S)^2 \right] } \\	
-=& 2N^2 \cdot  \sqrt{
+		\widehat{A'_{G_0,G}}(S)^2 \right] } 	\\
+\leq & 2N^2 \cdot  \sqrt{
 	\sum\limits_{S_1 = 1} \widehat{(O, M)}(S)^2 \cdot 
 		\frac{1} {(2N)^2 \cdot 2^{2m}} }	\\
 \leq &	2N^2 \cdot \sqrt{
 	\frac{1}{2N \cdot 2^k} \cdot 
 		\frac{1} {(2N)^2 \cdot 2^{2m}} }
 =  \frac{1}{2^{1+m+k/2 - n/2}}						     		                                 
-\end{align*}
+\end{align*} 
 \end{proof}
 
 \chapter{Generalized Fourier Transform}
