@@ -573,7 +573,7 @@ $$\underset{G_0, G} {\mathbb{E}}
 =& 2N^2 \cdot \sqrt{
 	\sum\limits_{S_1 = 1} \widehat{(O, M)}(S)^2 \cdot 
 		\underset{G_0, G} {\mathbb{E}} \left[  
-		\widehat{A'_{G_0,G}}(S)^2 \right] } 	\\
+		\widehat{A'_{G_0,G}}(S)^2 \right] } 	\\ 
 \leq & 2N^2 \cdot  \sqrt{
 	\sum\limits_{S_1 = 1} \widehat{(O, M)}(S)^2 \cdot 
 		\frac{1} {(2N)^2 \cdot 2^{2m}} }	\\
@@ -706,7 +706,7 @@ $\mathcal{F}$ is a linear, bijective mapping.
 \section{Introduction and Motivation}
 
 Randomness extraction is the problem of obtaining nearly uniform bits from sources that are 	only weakly random. Most of the applications in cryptography, algorithms, and so on require truly random, uncorrelated bits but most easily obtainable sources of randomness in natural do not satisfy these conditions. \\ \\
-An extractor $\text{Ext } : \{ 0,1 \}^n \rightarrow \{0, 1 \} ^m$ is a function that takes input from a weak source with sufficient min entropy and produces nearly uniform bits. Unfortunately, deterministic extractor from one source is impossible. To overcome this difficulty, 2-source extractor, each with sufficient high min entropy, has been used. By probabilistic argument, there exists 2-source extractors in which each has min entropy polynomial of $\log n$. However, it is important to construct such functions explicitly. Hadamard extractor shows that the dot product of two sources with min entropy greater than $n/2$ is a 2-source extractor. No progress was made for a long time until Bourgain broke the half barrier, constructed a 2-source extractor with min entropy slightly less than $n/2$. For the rest of this chapter, we will focus on how to construct Bourgain's extractor.
+An extractor $\text{Ext } : \{ 0,1 \}^n \rightarrow \{0, 1 \} ^m$ is a function that takes input from a weak source with sufficient min entropy and produces nearly uniform bits. Unfortunately, deterministic extractor from one source is impossible. To overcome this difficulty, 2-source extractors, each with sufficient high min entropy, have been used. By probabilistic argument, there exist 2-source extractors in which each has min entropy polynomial of $\log n$. However, it is important to construct such extractors explicitly. Hadamard extractor shows that the dot product of two sources with min entropy greater than $n/2$ is a 2-source extractor. No progress was made for a long time until Bourgain broke the half barrier, constructed a 2-source extractor with min entropy slightly less than $n/2$. For the rest of this chapter, we will focus on how to construct Bourgain's extractor.
 
 \section{Bourgain's Extractor}
 \begin{lemma}[XOR Lemma]
