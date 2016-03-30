@@ -491,9 +491,9 @@ $$SD(\mathcal{D} \oplus \mathcal{M}, \mathcal{U})
 \end{proof}
 
 \begin{theorem}
-Let $M$ be a distribution with min entropy $k$ over $\{0 , 1 \}^n$, let $G_0 \sim 1 \times m$, $G \sim m \times n$, and let $X$ be a uniform distribution over $\{ 0, 1 \} ^ m$. Then 
-$$SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \leq 
-\frac{1}{2^{1+m+k/2 - n/2}}$$
+Let $M$ be a distribution with min entropy $k$ over $\{0 , 1 \}^n$, let $G_0 \sim m \times 1$, $G \sim m \times n$, and let $X$ be a uniform distribution over $\{ 0, 1 \} ^ m$. Then 
+$$2SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \leq 
+\sqrt{\frac{2N}{MK}}$$
 \end{theorem}
 
 \begin{proof}
@@ -509,7 +509,7 @@ $\widehat{B_{G_0,G}}(S) = 0$ if $S_1 = 1$.
 \begin{claim}
 For any set $S \subseteq [n+1]$ with $S_1 =1$, 
 $$\underset{G_0, G} {\mathbb{E}} 
-	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{(2N)^2 \cdot 2^{2m}} $$
+	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{(2N)^2 \cdot M} $$
 \end{claim}
 
 \noindent \textit{Proof.}
@@ -519,68 +519,69 @@ $$ \widehat{A'_{G_0,G}}(S) = \mathbb{E}[A'_{G_0,G}(x) \cdot \chi_S(x)]
 \begin{align*}
 \text{where }
 \text{bias}_S(A'_{G_0, G})
-&= \frac{1}{2N} \left| 
+&= \left| 
 	A'_{G0,G} \{ x : \underset{i \in S} {\oplus xG_{i-1}} = 0 \} - 
 	A'_{G0,G} \{ x : \underset{i \in S} {\oplus xG_{i-1}} = 1 \} 
 	\right| \\
-&= \frac{1}{2N} \left| 
+&= \left| 
 	A'_{G0,G} \{ x : \underset{i \in S} {x \cdot (\oplus G_{i-1}}) = 0 \} - 
 	A'_{G0,G} \{ x : \underset{i \in S} {x \cdot (\oplus G_{i-1}}) = 1 \} 
 	\right| \\
 \end{align*}
-If $G_0 = \underset{i \in S_{>1}} {\oplus G_{i-1}}$, then $\text{bias}_S (A'_{G_0, G}) = 1$, and if $G_0 \neq  \underset{i \in S_{>1}} {\oplus G_{i-1}}$ then $\text{bias}_S (A'_{G_0, G}) = 0$. \\
-$$Pr[G_0 =  \underset{i \in S_{>1}} {\oplus G_{i-1}}]  
-\leq Pr[G_0 \in {\langle G_{i-1} : i \in S \rangle}] \leq \frac{1}{2^m}$$
-$$Pr[G_0 \neq  \underset{i \in S_{>1}} {\oplus G_{i-1}}]  
-\geq Pr[G_0 \in {\langle G_{i-1} : i \in S \rangle}] \geq 1 - \frac{1}{2^m}$$
-
-$$\underset{G_0, G} {\mathbb{E}} 
-	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{2^m} \cdot (\frac{1}{2N})^2 
-	= \frac{1}{(2N)^2 \cdot 2^{2m}}$$
+If $G_0 = \underset{i \in S_{>1}} {\oplus G_{i-1}}$, then $\text{bias}_S (A'_{G_0, G}) = 1$, and if $G_0 \neq  \underset{i \in S_{>1}} {\oplus G_{i-1}}$ then $\text{bias}_S (A'_{G_0, G}) = 0$.
+\begin{align*}
+& Pr[G_0 =  \underset{i \in S_{>1}} {\oplus G_{i-1}}]  
+\leq Pr[G_0 \in {\langle G_{i-1} : i \in S \rangle}] \leq \frac{1}{M} \\
+& Pr[G_0 \neq  \underset{i \in S_{>1}} {\oplus G_{i-1}}]  
+\geq Pr[G_0 \in {\langle G_{i-1} : i \in S \rangle}] \geq 1 - \frac{1}{M} \\
+& \underset{G_0, G} {\mathbb{E}} 
+	[\widehat{A'_{G_0,G}}(S)^2] \leq \frac{1}{M} \cdot \left( \frac{1}{2N} \right)^2 
+	= \frac{1}{(2N)^2 \cdot M} & \qedsymbol
+\end{align*}	
 %Back to the problem,
 \begin{align*}
-& SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \\
+& 2SD \{ (XG_0, XG \oplus M, G_0, G), (U, XG \oplus M, G_0, G) \} \\
 = & \underset{G_0, G} {\mathbb{E}} \left[
-	SD (A_{G_0,G},B_{G_0,G}) \right] \\
+	2SD (A_{G_0,G},B_{G_0,G}) \right] \\
 = & \underset{G_0, G} {\mathbb{E}} \left[
-	\frac{1}{2} \sum\limits_{i,j} | A_{G_0,G}(i)- B_{G_0,G} (i)| \right] \\
-\leq & \frac{1}{2} \underset{G_0, G} {\mathbb{E}} \left[ \sqrt{
+	\sum\limits_{i,j} | A_{G_0,G}(i)- B_{G_0,G} (i)| \right] \\
+\leq & \underset{G_0, G} {\mathbb{E}} \left[ \sqrt{
 	2N \cdot 2N \cdot \| A_{G_0,G} - B_{G_0,G} \|_2^2 }  \right] &\text{[by Cauchy Schwartz]} \\	
-\leq & N \underset{G_0, G} {\mathbb{E}} \left[
+\leq & 2N \underset{G_0, G} {\mathbb{E}} \left[
 	\sqrt{
 	\sum\limits_{S} 
 		(\widehat{A_{G_0,G}}(S) -
 	     \widehat{B_{G_0,G}} (S) )^2 } \right] & \text{[by Parseval's Idenity]} \\
-\leq & N \cdot \sqrt{
+\leq & 2N \cdot \sqrt{
 	\underset{G_0, G} {\mathbb{E}} \left[ \sum\limits_{S}   
 		(\widehat{A_{G_0,G}}(S) -
 	     \widehat{B_{G_0,G}} (S) )^2 \right] } & \text{[by Jensen's Inequality]}\\
-= & N \cdot \sqrt{
+= & 2N \cdot \sqrt{
 	\sum\limits_{S} \underset{G_0, G} {\mathbb{E}} \left[  
 		(\widehat{A_{G_0,G}}(S) -
 	     \widehat{B_{G_0,G}} (S) )^2 \right] } & \text{[by linearity of expectation]}\\		
-= & N \cdot \sqrt{
+= & 2N \cdot \sqrt{
 	\sum\limits_{S_1 = 1} \underset{G_0, G} {\mathbb{E}} \left[  
 		\widehat{A_{G_0,G}}(S)^2 \right] } & \text{[by Claim 2.13]}\\
-= & N \cdot \sqrt{
+= & 2N \cdot \sqrt{
 	\sum\limits_{S_1 = 1} \underset{G_0, G} {\mathbb{E}} \left[  
-		(\widehat{(O, M)}(S) \oplus
+		(\widehat{(0, M)}(S) \oplus
 		\widehat{(XG_0, XG |G_0, G)}(S))^2 \right] } \\		
-= & N \cdot \sqrt{
+= & 2N \cdot \sqrt{
 	\sum\limits_{S_1 = 1} \underset{G_0, G} {\mathbb{E}} \left[  
-		(2N)^2 \cdot \widehat{(O, M)}(S)^2 \cdot 
+		(2N)^2 \cdot \widehat{(0, M)}(S)^2 \cdot 
 		\widehat{(XG_0, XG |G_0, G)}(S)^2 \right] } &\text{[by convolution]}\\
-=& 2N^2 \cdot \sqrt{
-	\sum\limits_{S_1 = 1} \widehat{(O, M)}(S)^2 \cdot 
+=& 4N^2 \cdot \sqrt{
+	\sum\limits_{S_1 = 1} \widehat{(0, M)}(S)^2 \cdot 
 		\underset{G_0, G} {\mathbb{E}} \left[  
 		\widehat{A'_{G_0,G}}(S)^2 \right] } 	\\ 
-\leq & 2N^2 \cdot  \sqrt{
-	\sum\limits_{S_1 = 1} \widehat{(O, M)}(S)^2 \cdot 
-		\frac{1} {(2N)^2 \cdot 2^{2m}} }	\\
-\leq &	2N^2 \cdot \sqrt{
-	\frac{1}{2N \cdot 2^k} \cdot 
-		\frac{1} {(2N)^2 \cdot 2^{2m}} }
-=  \frac{1}{2^{1+m+k/2 - n/2}}						     		                                 
+\leq & 4N^2 \cdot  \sqrt{
+	\sum\limits_{S_1 = 1} \widehat{(0, M)}(S)^2 \cdot 
+		\frac{1} {(2N)^2 \cdot M} } &\text{[by Claim 2.14]}	\\
+\leq &	4N^2 \cdot \sqrt{
+	\frac{1}{2N \cdot K} \cdot 
+		\frac{1} {(2N)^2 \cdot M} }
+=  \sqrt{\frac{2N}{MK}}		& \qedsymbol				     		                                 
 \end{align*} 
 \end{proof}
 
@@ -595,7 +596,7 @@ $\mathbb{F}_q:$ the field of size $q$ \\
 For a complex number $x$, we use $\bar{x}$ to denote the complex conjugate of $x$.
 
 \section{Inner Product}
-Let $f : \mathbb{G} \rightarrow \mathbb{C}, \text{and } g : \mathbb{G} \rightarrow \mathbb{C}$ be two functions from a finite abelian group to the complex numbers. 
+Let $f : G \rightarrow \mathbb{C}, \text{and } g : G \rightarrow \mathbb{C}$ be two functions from a finite abelian group to the complex numbers. 
 \begin{definition}
 The inner product of $f$ and $g$ is defined as 
 $$\langle f, g \rangle = \underset {x} {\mathbb{E}} [f(x) \overline{g(x)}] $$
@@ -625,7 +626,7 @@ $$| \langle f, g \rangle | \leq \|f \|_2 \cdot \| g \|_2$$
 
 \section{Characters}
 \begin{definition} 
-A character of $\mathbb{G}$ is a homomorphism $\chi : \mathbb{G} \rightarrow \mathbb{C}^*$.
+A character of $G$ is a homomorphism $\chi : G \rightarrow \mathbb{C}^*$.
 \end{definition}
 \noindent $\chi$ is a trivial (principal) character if $\chi(a) = 1 \text{ for every } a \in G$. \\
 Clearly,
@@ -635,19 +636,19 @@ $$\chi(a)^n = \chi(na) = \chi(0) = 1$$
 Intuitively, the values of $\chi$ are $n^{th}$ roots of unity.
 \begin{prop}
 For any non-trivial character $\chi$, 
-$$\sum\limits_{a \in \mathbb{G}} \chi(a) = 0$$
+$$\sum\limits_{a \in G} \chi(a) = 0$$
 \end{prop}
 \begin{proof}
-Since $\chi$ is a non-trivial character, there exists $b \in \mathbb{G}$ such that $\chi(b) \neq 1$. We have
-$$\chi(b) \cdot \sum\limits_{a \in \mathbb{G}} \chi(a)
-= \sum\limits_{a \in \mathbb{G}} \chi(a) \chi(b)
-= \sum\limits_{a \in \mathbb{G}} \chi(a + b)
-= \sum\limits_{a \in \mathbb{G}} \chi(a)$$
-Hence, $\sum\limits_{a \in \mathbb{G}} \chi(a) = 0$
+Since $\chi$ is a non-trivial character, there exists $b \in G$ such that $\chi(b) \neq 1$. We have
+$$\chi(b) \cdot \sum\limits_{a \in G} \chi(a)
+= \sum\limits_{a \in G} \chi(a) \chi(b)
+= \sum\limits_{a \in G} \chi(a + b)
+= \sum\limits_{a \in G} \chi(a)$$
+Hence, $\sum\limits_{a \in G} \chi(a) = 0$
 \end{proof}
 
 \begin{lemma}
-For any two characters $\chi$ and $\psi$ of $\mathbb{G}$, 
+For any two characters $\chi$ and $\psi$ of $G$, 
 $$ \langle \chi, \psi \rangle =
 \begin{cases}
 	1             & \text{if} \ \chi = \psi \\
@@ -664,7 +665,9 @@ We say that a map $e : G \times G  \rightarrow \mathbb{C}$ is a bilinear map if 
 Let $e$ be the map that maps $(x,y) \mapsto \exp(2\pi xyi/r)$, then $e$ is a symmetric non-degenerate bilinear map.
 \end{lemma}
 
-\noindent Let $G^\land$ denote the set of all characters of $G$. 
+\begin{definition}
+Let $G^\land$ denote the set of all characters of $G$. 
+\end{definition}
 
 \begin{lemma}
 $G^\land$ is an abelian group under pointwise multiplication. 
@@ -905,20 +908,20 @@ $G = (x,y,z,t)$ is a $2 \times 2$ product graph if and only if
 \end{definition}
 
  
-Let $\mathbb{G}$ be the space of all $2 \times 2$ product graphs and let $\mathbb{D}$ be the space of all $2 \times 2$ distribution graphs. We want to find 
-$$ D^* = \underset{D \in \mathbb{D}} {argmax} \ dist(G, \mathbb{G})$$
-$$m = \underset{D \in \mathbb{D}} {\max} \ dist(G, \mathbb{G})$$
+Let $G$ be the space of all $2 \times 2$ product graphs and let $\mathbb{D}$ be the space of all $2 \times 2$ distribution graphs. We want to find 
+$$ D^* = \underset{D \in \mathbb{D}} {argmax} \ dist(G, G)$$
+$$m = \underset{D \in \mathbb{D}} {\max} \ dist(G, G)$$
 Let $D = (a,b,c,d)$ be any $2 \times 2$ distribution graph. Without lost of generality, assume $a \geq d$,  $b \geq c$, and $ad \geq bc$ 
 
 \begin{claim}
-$dist(D, \mathbb{G}) \leq f(a,b,c,d)$, \\
+$dist(D, G) \leq f(a,b,c,d)$, \\
 where $f(a,b,c,d) = \min \{(b+c), \frac{(ad - bc)}{a+b},
 \frac{1}{2}(| \sqrt{a} - a - b| + |\sqrt{a} - a - c|, |(1 - \sqrt{a})^2 -d|) \}$
 \end{claim}
 
 \begin{proof}
 Let $G = (x,y,z,t)$ be a product graph.  
-$$dist(D,\mathbb{G}) \leq dist(D,G) = \frac{1}{2} (|a-x| + |b-y| + |c-z| + |d-t|)$$
+$$dist(D,G) \leq dist(D,G) = \frac{1}{2} (|a-x| + |b-y| + |c-z| + |d-t|)$$
 So if we can find some graphs $G's$ such that $dist(D,G)$ equal to the three values above respectively, we are done. From the second property of distribution graph, it suggests the way to choose such $G's$.
 \begin{itemize}
 \item [1.] Choose $y = z =0$, $x = a+b$, and $t = c+d$, then $dist(D,G) = b+c$.
