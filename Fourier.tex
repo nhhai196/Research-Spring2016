@@ -634,7 +634,8 @@ Clearly,
  $$\chi(a+b) = \chi(a) \chi(b) \text{ for every } a,b \in G $$
 Hence,
 $$\chi(a)^n = \chi(na) = \chi(0) = 1$$
-Intuitively, the values of $\chi$ are $n^{th}$ roots of unity.
+Intuitively, the values of $\chi$ are $n^{th}$ roots of unity. So, 
+$$\overline{\chi(a)} = \chi(a)^{-1} = \chi(-a)$$
 \begin{prop}
 For any non-trivial character $\chi$, 
 $$\sum\limits_{a \in G} \chi(a) = 0$$
@@ -657,6 +658,14 @@ $$ \langle \chi, \psi \rangle =
 \end{cases} $$
 \end{lemma}
 
+\begin{proof}
+If $\chi = \psi$,
+ $\langle \chi, \chi \rangle = (1/|G|) \sum\limits_{x \in G} \chi(x) \overline{\chi(x)} = (1/|G|) \sum\limits_{x \in G} 1 = 1 $. \\
+If $\chi \neq \psi$, let $(\chi \overline{\psi}) (x) = \chi(x) \overline{\psi(x)}$, then $(\chi \overline{\psi})$ is a homomorphism since
+$$(\chi \overline{\psi}) (x+y) = \chi(x+y) \overline{\psi(x+y)} = \chi(x) \chi(y) \overline{\psi(x) \psi(y)} = \chi(x) \overline{\psi(x)} \chi(y) \overline{\psi(y)}
+= (\chi \overline{\psi}) (x) (\chi \overline{\psi}) (y) $$ Thus, by Lemma 3.8
+$$\langle \chi, \psi \rangle = (1/|G|) \sum\limits_{x \in G} \chi(x) \overline{\psi(x)} = (1/|G|) \sum\limits_{x \in G} (\chi \overline{\psi}) (x) = 0 $$.
+\end{proof}
 \section{Bi-linear Maps}
 \begin{definition}
 We say that a map $e : G \times G  \rightarrow \mathbb{C}$ is a bilinear map if it is a homomorphism in each variable. It is a non-degenerate if for every $x$, both $e(\cdot, x)$ and $e(x, \cdot)$ are non-trivial. It is symmetric if $e(x,y) = e(y,x)$ for every $x, y$.
@@ -690,21 +699,73 @@ $G^\land$ forms an orthonormal basis in $\mathbb{C}^n$
 This follows immediately from Lemmas 3.4 and 3.9.
 \section{Fourier Transform}
 \begin{definition}
-We define $\widehat{f} : G^\land \rightarrow \mathbb{C}$ as
-$$\widehat{f}(\chi) \defeq \langle f, \chi \rangle $$
+We define $\widehat{f} : G \rightarrow \mathbb{C}$ as
+$$\widehat{f}(x) \defeq \langle f, e_x \rangle $$
 \end{definition}
 $\widehat{f}$ is called the Fourier transform of $f$.
 From Theorem 3.10, every function $f \in \mathbb{C}^n$ can be written as linear combinations of characters. 
-$$f = \sum\limits_{\chi \in G^\land} \widehat{f} \chi$$
+$$f(x) = \sum\limits_{y \in G} \widehat{f}(y) \cdot e_y(x)$$
 
 \begin{definition}
 The mapping $\mathcal{F} : f \mapsto \widehat{f}$ is called the Fourier transform. 
 \end{definition}
 
-\begin{prop}
+\begin{fact}
 $\mathcal{F}$ is a linear, bijective mapping. 
+\end{fact}
+
+\begin{prop}[Preservation of Inner Product]
+$\langle f, g \rangle = |G| \langle \widehat{f}, \widehat{g} \rangle$
 \end{prop}
 
+\begin{proof}
+\begin{align*}
+\langle f, g \rangle  
+& = \frac{1}{|G|} \sum\limits_{x \in G} f(x) \overline{g(x)} \\
+& = \frac{1}{|G|} \sum\limits_{x \in G} 
+		\left( \sum\limits_{y \in G} \widehat{f}(y)  e_y(x) \right)
+		\left( \sum\limits_{z \in G} \overline{\widehat{g}(z) e_z(x)} \right) \\
+& = \frac{1}{|G|} \sum\limits_{x \in G} 
+			 \sum\limits_{y \in G} \sum\limits_{z \in G}
+			 \widehat{f}(y) \overline{\widehat{g}(z)}
+			 e_y(x) \overline{e_z(x)}  \\
+& = \frac{1}{|G|}  
+			 \sum\limits_{y \in G} \sum\limits_{z \in G}
+			 \widehat{f}(y) \overline{\widehat{g}(z)}
+			 \sum\limits_{x \in G} e_y(x) \overline{e_z(x)}  \\
+& = 		 \sum\limits_{y \in G} \sum\limits_{z \in G}
+			 \widehat{f}(y) \overline{\widehat{g}(z)}
+			 \langle e_y,  e_z \rangle  \\
+& = 		 \sum\limits_{y \in G}
+			 \widehat{f}(y) \overline{\widehat{g}(y)} \\
+& = |G| \langle \widehat{f}, \widehat{g} \rangle			 			 		
+\end{align*}
+\end{proof}
+If we let $f =g$ in the above equation, we will get Parseval's identity as follows. 
+
+\begin{fact}[Paserval's Identity]
+$\| f \|_{L^2} = \| \widehat{f} \|_{\ell^2} $
+\end{fact}
+
+\begin{prop} [Fourier Inversion]
+$f(x) = |G| \hat{\hat{f}}(-x)$
+\end{prop}
+
+\begin{proof}
+\begin{align*}
+|G| \hat{\hat{f}}(-x)
+& = |G| \langle \widehat{f}, e_{-x} \rangle \\
+& = \sum\limits_{y \in G} \widehat{f}(y) e_{x}(y)  \\
+& = \frac{1}{|G|}
+	\sum\limits_{y \in G} 
+	\langle f, e_y \rangle  e_{x}(y)\\
+& = \frac{1}{|G|}
+	\sum\limits_{y \in G} 
+		\sum\limits_{z \in G}f(z) \overline{e_z(y)}  e_{x}(y) \\
+& = \sum\limits_{z \in G}f(z) \langle e_x,  e_{z} \rangle \\
+& = f(x)		
+\end{align*}
+\end{proof}
 \chapter{XOR Lemma over Finite Abelian Groups}
 
 Here are some facts needed to prove XOR lemma. 
