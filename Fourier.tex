@@ -48,6 +48,7 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{claim}[theorem]{Claim}
 \newtheorem{prop}[theorem]{Proposition}
+\newtheorem{fact}[theorem]{Fact}
 
 \begin{document}
 
@@ -704,6 +705,130 @@ The mapping $\mathcal{F} : f \mapsto \widehat{f}$ is called the Fourier transfor
 $\mathcal{F}$ is a linear, bijective mapping. 
 \end{prop}
 
+\chapter{XOR Lemma over Finite Abelian Groups}
+
+Here are some facts needed to prove XOR lemma. 
+\begin{fact}
+If $\sigma : (G, +) \rightarrow (H, *)$ is an onto homomorphism, then for all non-trivial character $\phi$ of $H$, $\phi \circ \sigma$ is a non-trivial character of $G$.
+\end{fact} 
+$(\phi \circ \sigma)(x+y) = \phi (\sigma (x+y)) = \phi (\sigma(x) * \sigma(y))
+= \phi (\sigma (x)) \cdot \phi (\sigma (y)) 
+= (\phi \circ \sigma)(x) \cdot (\phi \circ \sigma)(y)$
+
+\begin{fact}
+For every character $\phi$ of H, and for every $\sigma: G \rightarrow H$,
+$$\operatorname{bias}_\phi(\sigma (X))
+= |H| \cdot |\langle \phi, \sigma(X) \rangle | 
+= |G| \cdot |\langle \phi \circ \sigma, X \rangle |$$
+\end{fact}
+This follows from the fact that
+$$\sigma(X)(y) = \sum\limits_{x : \sigma(x) = y} X(x)$$
+
+\begin{fact}
+If $e_x$ is a character of $G$, then $\| \widehat{e_x} \|_{L^1} = 1 / |G|$.
+\end{fact}
+$\| \widehat{e_x} \|_{L^1} = \mathbb{E}_y |\widehat{e_x}| 
+= \mathbb{E}_y |\langle e_x , e_y \rangle| = 1/|G| (|\langle e_x, e_x \rangle| 
++ \sum\limits_{y \neq x} |\langle e_x, e_y \rangle|) = 1/|G|$
+
+\begin{fact}
+$\| \sigma(X) - U \|_{\ell^1} \leq \| \sigma(X) - \sigma(U) \|_{\ell^1} + \| \sigma(U) - U \|_{\ell^1} $
+\end{fact}
+
+Following result is a generalization of Vazirani's XOR lemma.
+\begin{lemma}[XOR Lemma]
+Let $X$ be a distribution on a finite abelian group $G$ such that $\operatorname{bias}_\psi(X) = |\mathbb{E}[\psi (X)] | \leq \epsilon$ for every nontrivial character $\psi$. Then $X$ is $\epsilon \sqrt{|G|}$-close to the uniform distribution: $\| X - U \|_{\ell^1} \leq \epsilon \sqrt{|G|}$
+\end{lemma}
+
+\begin{proof}
+The assumption on $X$ is equivalent to $\|X - U \|_{\ell^\infty} \leq \epsilon/\sqrt{|G|}$. Then, we need to apply proposition ... to get the result.
+\end{proof}
+
+Note that the upper bound we have just get is propositional to the square root of the size of $G$. If $\epsilon$ is not small enough, then this bound is not good. In fact, we can't get a better bound for the same number of bits, which is $|G|$, since our inequality is tight,i.e, we can construct a distribution $X$ so that the equality happens. Thus, if we want to have some better bound, we have to trade-off the number of bits. Formally, we have the following lemma. 
+
+\begin{lemma}[XOR Lemma for Cyclic Groups]
+For every cyclic group $G = \mathbb{Z}_N$ and for every integer $M \leq N$, there exists an efficiently computable function $\sigma : \mathbb{Z}_N \rightarrow \mathbb{Z}_M = H$ with following property: If $X$ is a random variable over $\mathbb{Z}_N$ such that for every non-trivial character $\psi : \mathbb{Z}_M \rightarrow \mathbb{C}^*$, we have $\operatorname{bias}_{\psi}(X) \leq \epsilon$, then 
+$$\| \sigma(X) - U \|_{\ell^1} \leq O(\epsilon \sqrt{M} \log N) + O(M/N)$$
+\end{lemma}
+
+Some observations: Based on the Fact 4.1, if there exists an onto homomorphism $\sigma: G \rightarrow H$, then we just need to apply Lemma 4.5 to get the result since biases of $X$ give bounds on the biases of $\sigma(X)$ by the Fact 4.2. However, such a homomorphism doesn't exist for every $M$. For example, if $G= \mathbb{Z}_p$ and $M > p/2$, $G$ has no non-trivial subgroup. Instead, we can find a $\sigma = x \mod M$ that approximates a homomorphism. By the Fact 4.4, if we can show that $\sigma(U)$ is close to uniform and that $\sigma(X)$ is close to $\sigma(U)$, then we are done. 
+
+\begin{lemma} Let $U$ be the uniform distribution over $\mathbb{Z}_M$, and let $\sigma : \mathbb{Z}_N \rightarrow \mathbb{Z}_M $ such that $\sigma(x) = x \mod M$. Then,
+$$\| \sigma(U) - U \|_{\ell^1} \leq 2M/N$$
+\end{lemma}
+
+\begin{proof}
+Suppose $N = qM + r$ where $q,r$ are the quotient and remainder respectively. Then,
+$$\Pr[\sigma(U) = i | i < r] = (q+1)/N, \text{and }
+\Pr[\sigma(U) = i | i >= r] = q/N$$
+Thus, 
+\begin{align*}
+| \sigma(U) - U \|_{\ell^1} 
+&= r \left|\frac{(q+1)}{N} - \frac{1}{M}\right| + (M-r) \left|\frac{q}{N} - \frac{1}{M}\right| \\
+&= \frac{2r(M-r)}{MN} \\
+&\leq 2M/N
+\end{align*}
+\end{proof}
+
+To bound $\| \sigma(X) - \sigma(U) \|_{\ell^{1}}$, we just need to bound $\|\widehat{ \sigma(X) - \sigma(U)} \|_{\ell^{\infty}}$, which is the maximum Fourier coefficient of $\sigma(X) - \sigma(U)$. Notice that, for any non-trivial character $\psi$,
+\begin{align*}
+| \langle \psi, \sigma(X) - \sigma(U) \rangle| 
+&= \frac{N}{M}\langle \psi \circ \sigma, X -U \rangle | & \text{ [by Fact 4.2]}\\
+&= \frac{N^2}{M} | \langle \widehat{\psi \circ \sigma}, \widehat{X-U} \rangle | \\
+&\leq \frac{N^2}{M} \| \widehat{\psi \circ \sigma} \|_{L^1} \|\widehat{X-U} \|_{\ell^{\infty}}  & \text{[by triangle inequality]} \\
+\end{align*}
+And $\langle 1, \sigma(X) - \sigma(U) \rangle| = 0$. Hence, if $\| \psi \circ \sigma \|_{L^1}$ is small, so is $\|\widehat{ \sigma(X) - \sigma(U)} \|_{\ell^{\infty}}$. The following lemma will show that $\| \psi \circ \sigma \|_{L^1}$ is small if $N > M$
+\begin{lemma}
+$\| \widehat{\psi \circ \sigma} \|_{L^1} \leq O(\log N) /N$ 
+\end{lemma}
+\begin{proof}
+Let $\rho: G \rightarrow H$ such that $\rho(x) = \exp(2 \pi i x)$, then $\rho$ is a homomorphism. Since $\phi$ is a character of $H = \mathbb{Z}_M$, for every $y \in H$, 
+$\phi(y) = \rho (wy/M)$ for some $w \in H$. Clearly, for every $x \in G$, $\phi(\sigma(x)) = \phi(x \mod M) = \rho(wx/M)$. Let $wN/M = a = c+d$, where $c$ is an integer and $d \in [0,1]$. 
+\begin{align*}
+\| \widehat{\psi \circ \sigma} \|_{L^1}
+& = 1/N \sum\limits_{t \in \mathbb{Z}_N} |\widehat{\phi \circ \sigma}(t) | \\
+& = 1/ N  \sum\limits_{t \in \mathbb{Z}_N} 
+	\left| \langle e_t, \phi \circ \sigma \rangle  \right| \\
+& = 1/ N^2  \sum\limits_{t \in \mathbb{Z}_N} 
+	\left| \sum\limits_{x \in \mathbb{Z}_N} 
+		 e_t(x) \cdot \overline{\phi(\sigma(x))} \right| \\	
+& = 1/ N^2  \sum\limits_{t \in \mathbb{Z}_N} 
+	\left| \sum\limits_{x \in \mathbb{Z}_N} 
+		 \rho(tx/N) \cdot \rho(-wx/M)  \right| \\
+& = 1/ N^2  \sum\limits_{t \in \mathbb{Z}_N} 
+	\left| \sum\limits_{x \in \mathbb{Z}_N} 
+		 \rho \left( \frac{x(tM-wN)}{MN} \right) \right| \\
+& \leq 1/N + 1/ N^2  \sum\limits_{t \in \mathbb{Z}_N, t \neq a} 
+	\left|
+		 \left(\rho \left( \frac{N(tM-wN)}{MN} \right) - 1 \right) \Big/
+		 \left(\rho \left( \frac{tM-wN}{MN} \right) - 1 \right) \right| \\	
+& \leq 1/N + 1/ N^2  \sum\limits_{t \in \mathbb{Z}_N, t \neq a} 
+	\left|
+		 2 \Big/
+		 \left(\rho \left( \frac{t-a}{N} \right) - 1 \right) \right| \\	
+& = 1/N + 1/ N^2  \sum\limits_{t \in \mathbb{Z}_N, t \neq d} 
+	\left|
+		 2 \Big/
+		 \left(\rho \left( \frac{t-d}{N} \right) - 1 \right) \right| 		
+\end{align*}
+Notice that $\left| \rho \left( \frac{t-d}{N} \right) - 1 \right|$ is the distance between two points $(1,0)$ and $(\cos(2\pi(t-d)/N), \sin (2\pi (t-d)/N))$ in the unit circle, and that $\left| \rho \left( \frac{t-d}{N} \right) - 1 \right| \geq |\sin (2\pi (t-d)/N))| \geq |2\pi (t-d)/N)|$ if $|2\pi (t-d)/N)| \leq \pi /2$. Thus, let choose $0 < r < 1/4$, then 
+\begin{itemize}
+\item if $t \in [0, rN)$ then $|2\pi (t-d)/N)| \leq \pi /2$,
+\item if $t \in ((1-r)N, rN]$ then 
+$\left| \rho \left( \frac{t-d}{N} \right) - 1 \right| 
+= \left| \rho \left( \frac{-t'-d}{N} \right) - 1 \right|
+\geq 2 \pi (t'+d)/N$ since $(t'+d)/N < 1/4$, where $t'= N-t \in [0, rN)$
+\item if $t \in [rN, (1-r)N] $ then $\left| \rho \left( \frac{t-d}{N} \right) - 1 \right| \geq \Omega(1)$ 
+\end{itemize}
+Therefore, 
+$$\| \widehat{\psi \circ \sigma} \|_{L^1} \leq 1/N + (1/N^2) (O(N \log N) + O(N)) + 1/N \leq O(\log N)/N $$
+\end{proof}
+\noindent Now, we have
+$$\|\widehat{ \sigma(X) - \sigma(U)} \|_{\ell^{\infty}} \leq (N^2/M)\cdot O(\log N)/N \cdot (\epsilon/N) = O(\epsilon \log N)/M$$ 
+Applying Lemma ..., 
+$$\|\sigma(X) - \sigma(U) \|_{\ell^{1}} \leq O(\epsilon \sqrt{M}\log N)$$
+By Fact 4.4, 
+$$\|\sigma(X) - U \|_{\ell^{1}} \leq O(\epsilon \sqrt{M}\log N) + O(M/N)$$ 
 \chapter{Bourgain's Extractor}
 
 \section{Introduction and Motivation}
@@ -712,9 +837,7 @@ Randomness extraction is the problem of obtaining nearly uniform bits from sourc
 An extractor $\text{Ext } : \{ 0,1 \}^n \rightarrow \{0, 1 \} ^m$ is a function that takes input from a weak source with sufficient min entropy and produces nearly uniform bits. Unfortunately, deterministic extractor from one source is impossible. To overcome this difficulty, 2-source extractors, each with sufficient high min entropy, have been used. By probabilistic argument, there exist 2-source extractors in which each has min entropy polynomial of $\log n$. However, it is important to construct such extractors explicitly. Hadamard extractor shows that the dot product of two sources with min entropy greater than $n/2$ is a 2-source extractor. No progress was made for a long time until Bourgain broke the half barrier, constructed a 2-source extractor with min entropy slightly less than $n/2$. For the rest of this chapter, we will focus on how to construct Bourgain's extractor.
 
 \section{Bourgain's Extractor}
-\begin{lemma}[XOR Lemma]
-Let $X$ be a distribution on a finite abelian group $G$ such that $|\mathbb{E}[\psi (X)] | \leq \epsilon$ for every nontrivial character $\psi$. Then $X$ is $\epsilon$-close to the uniform distribution: $\| X - U \|_{\ell^1} \leq \epsilon \sqrt{|G|}$
-\end{lemma}
+
 \subsection{The Hadamard Extractor}
 In this section, we will show that the dot product of two sources with min entropy greater than $n/2$ is a 2-source extractor. \\ \\
 Let $Had: \mathbb{F}^l \times \mathbb{F}^l \rightarrow \mathbb{F}$ be the dot product function, $Had(x,y) = x \cdot y$. \\ \\
@@ -766,6 +889,7 @@ bias_\psi(X,Y)^2
 &= bias_\psi(X - X, Y)
 \end{align*}
 \end{proof}
+
 \appendix
 
 \chapter{}
