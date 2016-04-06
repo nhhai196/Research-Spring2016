@@ -831,7 +831,7 @@ Let $X$ be a distribution on a finite abelian group $G$ such that $\operatorname
 \end{lemma}
 
 \begin{proof}
-The assumption on $X$ is equivalent to $\|X - U \|_{\ell^\infty} \leq \epsilon/\sqrt{|G|}$. Then, we need to apply proposition ... to get the result.
+The assumption on $X$ is equivalent to $\|X - U \|_{\ell^\infty} \leq \epsilon/\sqrt{|G|}$. Then, we need to apply Proposition 3.22 to get the result.
 \end{proof}
 
 Note that the upper bound we have just get is propositional to the square root of the size of $G$. If $\epsilon$ is not small enough, then this bound is not good. In fact, we can't get a better bound for the same number of bits, which is $|G|$, since our inequality is tight,i.e, we can construct a distribution $X$ so that the equality happens. Thus, if we want to have some better bound, we have to trade-off the number of bits. Formally, we have the following lemma. 
@@ -915,7 +915,7 @@ $$\| \widehat{\psi \circ \sigma} \|_{L^1} \leq 1/N + (1/N^2) (O(N \log N) + O(N)
 \end{proof}
 \noindent Now, we have
 $$\|\widehat{ \sigma(X) - \sigma(U)} \|_{\ell^{\infty}} \leq (N^2/M)\cdot O(\log N)/N \cdot (\epsilon/N) = O(\epsilon \log N)/M$$ 
-Applying Lemma ..., 
+Applying Proposition 3.22, 
 $$\|\sigma(X) - \sigma(U) \|_{\ell^{1}} \leq O(\epsilon \sqrt{M}\log N)$$
 By Fact 4.4, 
 $$\|\sigma(X) - U \|_{\ell^{1}} \leq O(\epsilon \sqrt{M}\log N) + O(M/N)$$ 
