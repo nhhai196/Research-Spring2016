@@ -743,10 +743,14 @@ $\langle f, g \rangle = |G| \langle \widehat{f}, \widehat{g} \rangle$
 \end{proof}
 If we let $f =g$ in the above equation, we will get Parseval's identity as follows. 
 
-\begin{fact}[Paserval's Identity]
+\begin{prop}[Paserval's Identity]
 $\| f \|_{L^2} = \| \widehat{f} \|_{\ell^2} $
-\end{fact}
+\end{prop}
+This follows from Parseval's identity and basic inequalities between norms.
 
+\begin{prop}
+$ \| f \|_{\ell^1} \leq \| \widehat{f} \|_{\ell^\infty}$
+\end{prop}
 \begin{prop} [Fourier Inversion]
 $f(x) = |G| \hat{\hat{f}}(-x)$
 \end{prop}
