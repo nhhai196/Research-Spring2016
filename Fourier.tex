@@ -759,7 +759,8 @@ $f(x) = |G| \hat{\hat{f}}(-x)$
 \begin{align*}
 |G| \hat{\hat{f}}(-x)
 & = |G| \langle \widehat{f}, e_{-x} \rangle \\
-& = \sum\limits_{y \in G} \widehat{f}(y) e_{x}(y)  \\
+& = \sum\limits_{y \in G} \widehat{f}(y) e_{x}(y)  
+     	&\text{[since } \overline{e_{-x}(y)} = e_x(y)]\\
 & = \frac{1}{|G|}
 	\sum\limits_{y \in G} 
 	\langle f, e_y \rangle  e_{x}(y)\\
@@ -770,6 +771,31 @@ $f(x) = |G| \hat{\hat{f}}(-x)$
 & = f(x)		
 \end{align*}
 \end{proof}
+
+\section{Convolution}
+\begin{definition}
+Given any two function $f$ and $g$ : $G \rightarrow \mathbb{C}$, the convolution of $f*g$ :  $G \rightarrow \mathbb{C}$ is defined as
+$$(f*g)(x) \defeq \sum\limits_{r \in G} f(r) \overline{g(x +r)}$$
+\end{definition}
+
+\begin{prop}
+$\widehat{f*g}(-x) = |G| \widehat{f}(x) \widehat{g}(-x)$
+\end{prop}
+
+\begin{proof}
+Note that $\overline{e_{-x}(y)} = e_x(y) = e_x(y+r - r) = e_x(y+r) e_x(-r) = \overline {e_x(r)} e_x(y+r)$. Thus,
+\begin{align*}
+\widehat{f*g}(x)
+& = \frac{1}{|G|} \sum\limits_{y \in G} (f*g)(y) \overline{e_{-x}(y)} \\
+& = \frac{1}{|G|} \sum\limits_{y \in G}	
+	\sum\limits_{r \in G} f(r) \overline{g(y +r)} \cdot  \overline{e_x(r)} e_x(y+r)\\
+& = \sum\limits_{z \in G}	
+	\overline{g(z)} e_x(z) \langle	f, e_x \rangle\\
+& =|G| \langle e_x, g \rangle \widehat{f}(x) \\
+& = |G| \widehat{f}(x) \widehat{g}(-x)		 	
+\end{align*}
+\end{proof}
+
 \chapter{XOR Lemma over Finite Abelian Groups}
 
 Here are some facts needed to prove XOR lemma. 
